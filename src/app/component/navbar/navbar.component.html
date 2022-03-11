@@ -27,13 +27,31 @@
                     </div>
                 </li>
             </ul>
-            <div class="btn-group">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                  Log in
+            <div *ngIf="user === null">
+                <button #logInDropdownButton class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside">
+                    Log in
                 </button>
-                <app-log-in-form class="dropdown-menu dropdown-menu-end"></app-log-in-form>
-              </div>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <app-log-in-dropdown [parent]="this"></app-log-in-dropdown>
+                </div>
+            </div>
+            <div *ngIf="user !== null">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-auto">
+                        Logged as <span *ngIf="user.role === 'Administrator'">
+                            <img id="admin-logo" src="assets/img/admin.png" title="Administrator">
+                        </span><span class="fw-bold fst-italic"> {{user.name}} </span>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-danger" (click)="logOut()">
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
+<app-sign-up-modal [parent]="this"></app-sign-up-modal>
 <router-outlet></router-outlet>

@@ -7,12 +7,14 @@ import { BookListComponent } from './component/book/book-list/book-list.componen
 import { ChapterListComponent } from './component/chapter/chapter-list/chapter-list.component';
 import { ErrorComponent } from './component/error/error.component';
 import { HomeComponent } from './component/home/home.component';
-import { LogInFormComponent } from './component/navbar/log-in-form/log-in-form.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { SignUpModalComponent } from './component/navbar/sign-up-modal/sign-up-modal.component';
 import { ReaderNavbarComponent } from './component/reader/reader-navbar/reader-navbar.component';
 import { ReaderViewComponent } from './component/reader/reader-view/reader-view.component';
 import { ReaderComponent } from './component/reader/reader.component';
+import { FormsModule } from '@angular/forms';
+import { LogInDropdownComponent } from './component/navbar/log-in-dropdown/log-in-dropdown.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,14 +28,16 @@ import { ReaderComponent } from './component/reader/reader.component';
     ReaderViewComponent,
     ReaderNavbarComponent,
     ReaderComponent,
-    LogInFormComponent,
-    SignUpModalComponent
+    SignUpModalComponent,
+    LogInDropdownComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

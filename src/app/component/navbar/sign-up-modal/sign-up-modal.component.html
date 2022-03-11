@@ -2,15 +2,42 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">New account</h5>
+                <button #closeSignUpButton class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                ...
+                <div class="m-3">
+                    <label for="usernameSignUpInput" class="form-label">Username</label>
+                    <input type="text" id="usernameSignUpInput" class="form-control" [(ngModel)]="signUpDto.username"
+                        (keydown.enter)="signUp()" [class.is-invalid]="errors.has('name')"
+                        [class.is-valid]="errors.size > 0 && !errors.has('name')">
+                    <div *ngFor="let message of errors.get('name')" class="invalid-feedback">
+                        {{message}}
+                    </div>
+                </div>
+                <div class="m-3">
+                    <label for="passwordSignUpInput" class="form-label">Password</label>
+                    <input type="password" id="passwordSignUpInput" class="form-control"
+                        [(ngModel)]="signUpDto.password" (keydown.enter)="signUp()"
+                        [class.is-invalid]="errors.has('password')"
+                        [class.is-valid]="errors.size > 0 && !errors.has('password')">
+                    <div *ngFor="let message of errors.get('password')" class="invalid-feedback">
+                        {{message}}
+                    </div>
+                </div>
+                <div class="m-3">
+                    <label for="passwordConfirmationSignUpInput" class="form-label">Confirm password</label>
+                    <input type="password" id="passwordConfirmationSignUpInput" class="form-control"
+                        [(ngModel)]="passwordConfirmation" (keydown.enter)="signUp()"
+                        [class.is-invalid]="errors.has('passwordConfirmation')"
+                        [class.is-valid]="errors.size > 0 && !errors.has('passwordConfirmation')">
+                    <div *ngFor="let message of errors.get('passwordConfirmation')" class="invalid-feedback">
+                        {{message}}
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="modal-footer justify-content-center">
+                <button type="submit" class="btn btn-lg btn-info" (click)="signUp()">Sign up</button>
             </div>
         </div>
     </div>

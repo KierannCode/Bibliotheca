@@ -1,7 +1,0 @@
-#reader-container {
-    height: 100vh;
-}
-
-app-reader-view {
-    min-height: 0;
-}
