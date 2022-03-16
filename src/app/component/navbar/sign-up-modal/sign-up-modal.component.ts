@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { map } from 'rxjs';
-import { UserDto } from 'src/app/dto/UserDto';
+import { SignUpDto } from 'src/app/dto/SignUpDto';
+import { ErrorMap } from 'src/app/service/util/ErrorMap';
+import { UserService } from 'src/app/service/user.service';
 import { NavbarComponent } from '../navbar.component';
+import { AppConfig } from 'src/app/service/util/AppConfig';
 
 @Component({
   selector: 'app-sign-up-modal',
@@ -10,40 +13,47 @@ import { NavbarComponent } from '../navbar.component';
 })
 export class SignUpModalComponent implements OnInit {
 
-  signUpDto: UserDto = { username: '', password: '' };
+  signUpDto: SignUpDto = { username: '', password: '' };
 
   passwordConfirmation: string = '';
 
+  contactEmail: string = AppConfig.CONTACT_EMAIL;
+
+  loading = false;
+
   @ViewChild('closeSignUpButton') closeSignUpButton!: ElementRef;
 
-  errors: Map<string, Array<string>> = new Map();
+  errorMap: ErrorMap = new ErrorMap();
 
   @Input()
   parent!: NavbarComponent;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
   }
 
   signUp(): void {
-    this.errors.clear();
-    if (this.signUpDto.username === '') {
-      this.errors.set('name', Array.of('The username cannot be empty', 'This username is not available'));
-    }
-    if (this.signUpDto.password === '') {
-      this.errors.set('password', Array.of('The password cannot be empty'));
-    }
-    if (this.passwordConfirmation !== this.signUpDto.password) {
-      this.errors.set('passwordConfirmation', Array.of('The password and confirmation password do not match'));
-    }
-    if (this.errors.size == 0) {
-      console.log(this.signUpDto);
-      this.closeSignUpButton.nativeElement.click();
-      this.parent.logInDropdownComponent.logInDto.username = this.signUpDto.username;
-      setTimeout(() => {
-        this.parent.toggleLogInDropdownButton();
-      }, 200);
-    }
+    this.errorMap = new ErrorMap();
+    this.loading = true;
+    this.userService.signUp(this.signUpDto).subscribe({
+      next: (user) => {
+        this.closeSignUpButton.nativeElement.click();
+        this.parent.logInDropdownComponent.logInDto.username = user.name;
+        setTimeout(() => {
+          this.parent.toggleLogInDropdownButton();
+        }, 200);
+      },
+      error: (error: HttpErrorResponse) => {
+        switch (error.status) {
+          case 400:
+            this.errorMap.import(error.error);
+            break;
+          default:
+            this.errorMap.put('unknown', error.message);
+            break;
+        }
+      }
+    }).add(() => this.loading = false);
   }
 }

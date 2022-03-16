@@ -1,6 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { UserDto } from 'src/app/dto/UserDto';
+import { LogInDto } from 'src/app/dto/LogInDto';
+import { ErrorMap } from 'src/app/service/util/ErrorMap';
+import { UserService } from 'src/app/service/user.service';
 import { NavbarComponent } from '../navbar.component';
+import { AppConfig } from 'src/app/service/util/AppConfig';
 
 @Component({
   selector: 'app-log-in-dropdown',
@@ -9,21 +13,36 @@ import { NavbarComponent } from '../navbar.component';
 })
 export class LogInDropdownComponent implements OnInit {
 
-  logInDto: UserDto = {};
+  logInDto: LogInDto = {};
+
+  errorMap: ErrorMap = new ErrorMap();
+
+  loading = false;
 
   @Input()
   parent!: NavbarComponent;
 
-  constructor() {
+  constructor(private userService: UserService, public config: AppConfig) {
   }
 
   ngOnInit(): void {
   }
 
   logIn(): void {
-    if (this.logInDto.username != undefined) {
-      this.parent.user = {name: this.logInDto.username, role: 'Unknown'};
-      this.parent.toggleLogInDropdownButton();
-    }
+    this.errorMap = new ErrorMap();
+    this.loading = true;
+    this.userService.logIn(this.logInDto).subscribe({
+      next: (user) => this.config.user = user,
+      error: (error: HttpErrorResponse) => {
+        switch (error.status) {
+          case 400:
+            this.errorMap = error.error;
+            break;
+          default:
+            this.errorMap.put('unknown', error.message);
+            break;
+        }
+      }
+    }).add(() => this.loading = false);
   }
 }

@@ -15,6 +15,7 @@ import { ReaderComponent } from './component/reader/reader.component';
 import { FormsModule } from '@angular/forms';
 import { LogInDropdownComponent } from './component/navbar/log-in-dropdown/log-in-dropdown.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AuthorItemComponent } from './component/author/author-item/author-item.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ReaderNavbarComponent,
     ReaderComponent,
     SignUpModalComponent,
-    LogInDropdownComponent
+    LogInDropdownComponent,
+    AuthorItemComponent
   ],
   imports: [
     BrowserModule,

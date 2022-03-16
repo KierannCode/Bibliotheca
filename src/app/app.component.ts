@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { User } from './model/User';
+import { UserService } from './service/user.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  static API_ENDPOINT = 'http://localhost:8080/';
 }

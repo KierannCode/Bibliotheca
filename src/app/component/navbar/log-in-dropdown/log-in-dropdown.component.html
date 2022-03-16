@@ -1,13 +1,28 @@
+<small *ngFor="let message of errorMap.get('unknown')" class="m-3 text-danger">
+    {{message}}
+</small>
 <div class="m-3">
     <label for="usernameLogInInput" class="form-label">Username</label>
-    <input type="text" id="usernameLogInInput" class="form-control" [(ngModel)]="logInDto.username" (keydown.enter)="logIn()">
+    <input type="text" id="usernameLogInInput" class="form-control" [(ngModel)]="logInDto.username"
+        (keydown.enter)="logIn()" [class.is-invalid]="errorMap.has('name')"
+        [class.is-valid]="errorMap.size > 0 && !errorMap.has('name') && !errorMap.has('unknown')">
+    <div *ngFor="let message of errorMap.get('name')" class="invalid-feedback">
+        {{message}}
+    </div>
 </div>
 <div class="m-3">
     <label for="passwordLogInInput" class="form-label">Password</label>
-    <input type="password" id="passwordLogInInput" class="form-control" [(ngModel)]="logInDto.password" (keydown.enter)="logIn()">
+    <input type="password" id="passwordLogInInput" class="form-control" [(ngModel)]="logInDto.password"
+        (keydown.enter)="logIn()" [class.is-invalid]="errorMap.has('password')"
+        [class.is-valid]="errorMap.size > 0 && !errorMap.has('password') && !errorMap.has('unknown')">
+    <div *ngFor="let message of errorMap.get('password')" class="invalid-feedback">
+        {{message}}
+    </div>
 </div>
 <div class="d-flex justify-content-center m-3">
-    <button class="btn btn-primary" (click)="logIn()">Log in</button>
+    <button type="submit" class="btn btn-lg btn-info" (click)="logIn()" [disabled]="loading">
+        <div *ngIf="loading" class="spinner-border"></div><div *ngIf="!loading">Log in</div>
+    </button>
 </div>
 <div class="dropdown-divider"></div>
 <div class="row align-items-center justify-content-center m-3">

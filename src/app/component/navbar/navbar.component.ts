@@ -1,7 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, Inject, Injectable, OnInit, ViewChild } from '@angular/core';
-import { User } from 'src/app/model/User';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
+import { AppConfig } from 'src/app/service/util/AppConfig';
 import { LogInDropdownComponent } from './log-in-dropdown/log-in-dropdown.component';
 
 @Component({
@@ -11,18 +10,11 @@ import { LogInDropdownComponent } from './log-in-dropdown/log-in-dropdown.compon
 })
 export class NavbarComponent implements OnInit {
 
-  user: User | null = null;
-
   @ViewChild('logInDropdownButton') logInDropdownButton!: ElementRef;
 
   @ViewChild(LogInDropdownComponent) logInDropdownComponent!: LogInDropdownComponent;
 
-  constructor(userService: UserService) {
-    userService.getAuthentifiedUser().subscribe({
-      next: (user) => this.user = user,
-      error: (error: HttpErrorResponse) => console.log(error)
-    })
-  }
+  constructor(private userService: UserService, public config: AppConfig) { }
 
   ngOnInit(): void {
   }
@@ -32,6 +24,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut(): void {
-    this.user = null;
+    this.userService.logOut().subscribe();
+    this.config.user = null;
   }
 }
