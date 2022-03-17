@@ -15,42 +15,10 @@
                 <li class="nav-item">
                     <a routerLinkActive="active" routerLink="books" class="nav-link">Books</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
-                </li>
             </ul>
-            <div *ngIf="config.user === null">
-                <button #logInDropdownButton class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside">
-                    Log in
-                </button>
-                <div class="dropdown-menu dropdown-menu-end">
-                    <app-log-in-dropdown [parent]="this"></app-log-in-dropdown>
-                </div>
-            </div>
-            <div *ngIf="config.user !== null">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-auto">
-                        Logged as <span class="fw-bold fst-italic"> {{config.user.name}} </span>
-                        <img *ngIf="config.user.role === 'Administrator'" id="admin-logo" src="assets/img/admin.png" title="Administrator">
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-danger" (click)="logOut()">
-                            Log out
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <app-log-in-dropdown *ngIf="config.contributor === null"></app-log-in-dropdown>
+            <app-contributor-dropdown *ngIf="config.contributor !== null"></app-contributor-dropdown>
         </div>
     </div>
 </nav>
-<app-sign-up-modal [parent]="this"></app-sign-up-modal>
 <router-outlet></router-outlet>

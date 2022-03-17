@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { SignUpDto } from 'src/app/dto/SignUpDto';
 import { ErrorMap } from 'src/app/service/util/ErrorMap';
-import { UserService } from 'src/app/service/user.service';
-import { NavbarComponent } from '../navbar.component';
 import { AppConfig } from 'src/app/service/util/AppConfig';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { LogInDropdownComponent } from '../log-in-dropdown/log-in-dropdown.component';
+import { ContributorService } from 'src/app/service/contributor.service';
 
 @Component({
   selector: 'app-sign-up-modal',
@@ -15,20 +16,20 @@ export class SignUpModalComponent implements OnInit {
 
   signUpDto: SignUpDto = { username: '', password: '' };
 
-  passwordConfirmation: string = '';
+  modalRef?: BsModalRef;
 
   contactEmail: string = AppConfig.CONTACT_EMAIL;
 
   loading = false;
 
-  @ViewChild('closeSignUpButton') closeSignUpButton!: ElementRef;
-
   errorMap: ErrorMap = new ErrorMap();
 
-  @Input()
-  parent!: NavbarComponent;
+  @ViewChild('template') template?: TemplateRef<any>;
 
-  constructor(private userService: UserService) { }
+  @Input()
+  parent!: LogInDropdownComponent;
+
+  constructor(private contributorService: ContributorService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
   }
@@ -36,13 +37,12 @@ export class SignUpModalComponent implements OnInit {
   signUp(): void {
     this.errorMap = new ErrorMap();
     this.loading = true;
-    this.userService.signUp(this.signUpDto).subscribe({
-      next: (user) => {
-        this.closeSignUpButton.nativeElement.click();
-        this.parent.logInDropdownComponent.logInDto.username = user.name;
-        setTimeout(() => {
-          this.parent.toggleLogInDropdownButton();
-        }, 200);
+    this.contributorService.signUp(this.signUpDto).subscribe({
+      next: (contributor) => {
+        this.modalRef?.hide();
+        this.parent.logInDto.username = contributor.username;
+        this.parent.logInDto.password = '';
+        this.parent.isOpen = true;
       },
       error: (error: HttpErrorResponse) => {
         switch (error.status) {
@@ -55,5 +55,11 @@ export class SignUpModalComponent implements OnInit {
         }
       }
     }).add(() => this.loading = false);
+  }
+
+  openModal() {
+    if (this.template != undefined) {
+      this.modalRef = this.modalService.show(this.template);
+    }
   }
 }

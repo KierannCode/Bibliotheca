@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LogInDto } from 'src/app/dto/LogInDto';
 import { ErrorMap } from 'src/app/service/util/ErrorMap';
-import { UserService } from 'src/app/service/user.service';
-import { NavbarComponent } from '../navbar.component';
+import { ContributorService } from 'src/app/service/contributor.service';
 import { AppConfig } from 'src/app/service/util/AppConfig';
+import { SignUpModalComponent } from '../sign-up-modal/sign-up-modal.component';
 
 @Component({
   selector: 'app-log-in-dropdown',
@@ -13,16 +13,17 @@ import { AppConfig } from 'src/app/service/util/AppConfig';
 })
 export class LogInDropdownComponent implements OnInit {
 
+  isOpen = false;
+
   logInDto: LogInDto = {};
 
   errorMap: ErrorMap = new ErrorMap();
 
   loading = false;
 
-  @Input()
-  parent!: NavbarComponent;
+  @ViewChild(SignUpModalComponent) signUpModalComponent!: SignUpModalComponent;
 
-  constructor(private userService: UserService, public config: AppConfig) {
+  constructor(private contributorService: ContributorService, public config: AppConfig) {
   }
 
   ngOnInit(): void {
@@ -31,15 +32,15 @@ export class LogInDropdownComponent implements OnInit {
   logIn(): void {
     this.errorMap = new ErrorMap();
     this.loading = true;
-    this.userService.logIn(this.logInDto).subscribe({
-      next: (user) => this.config.user = user,
+    this.contributorService.logIn(this.logInDto).subscribe({
+      next: (contributor) => this.config.contributor = contributor,
       error: (error: HttpErrorResponse) => {
         switch (error.status) {
           case 400:
             this.errorMap = error.error;
             break;
           default:
-            this.errorMap.put('unknown', error.message);
+            this.errorMap.put('unknown', error.error);
             break;
         }
       }

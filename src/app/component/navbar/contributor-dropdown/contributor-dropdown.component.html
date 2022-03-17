@@ -1,0 +1,31 @@
+<div class="row align-items-center justify-content-center">
+    <div class="col-auto">
+        Logged as <span class="fw-bold fst-italic"> {{config.contributor?.username}} </span>
+        <img *ngIf="config.contributor?.role === 'Administrator'" id="admin-logo" src="assets/img/admin.png"
+            title="Administrator">
+    </div>
+    <div class="col-auto dropdown" dropdown [isAnimated]="true">
+        <button type="button" class="btn btn-dark dropdown-toggle" dropdownToggle>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" *dropdownMenu>
+            <li><a class="dropdown-item">Dashboard</a></li>
+            <li><a class="dropdown-item">Settings</a></li>
+            <div *ngIf="config.contributor?.role === 'Administrator'">
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item">Control panel</a></li>
+                <li><button class="dropdown-item btn btn-link" (click)="generateToken()">Generate
+                        token</button></li>
+            </div>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><button class="dropdown-item text-danger btn btn-link" (click)="logOut()">Log
+                    out</button></li>
+        </ul>
+    </div>
+</div>
+<div class="position-fixed bottom-0 start-50 translate-middle-x">
+<alert *ngIf="token !== null" [type]="'info'" [dismissible]="true" (onClose)="token = null">Token created : {{token.value}}</alert>
+</div>

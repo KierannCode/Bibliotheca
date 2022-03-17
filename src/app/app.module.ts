@@ -16,6 +16,11 @@ import { FormsModule } from '@angular/forms';
 import { LogInDropdownComponent } from './component/navbar/log-in-dropdown/log-in-dropdown.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthorItemComponent } from './component/author/author-item/author-item.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ContributorDropdownComponent } from './component/navbar/contributor-dropdown/contributor-dropdown.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   declarations: [
@@ -31,13 +36,18 @@ import { AuthorItemComponent } from './component/author/author-item/author-item.
     ReaderComponent,
     SignUpModalComponent,
     LogInDropdownComponent,
-    AuthorItemComponent
+    AuthorItemComponent,
+    ContributorDropdownComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
+    AlertModule.forRoot()
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
