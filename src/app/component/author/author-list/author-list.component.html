@@ -1,8 +1,4 @@
-<div class="py-5 bg-info text-center">
-    <h1 class="h1 fw-bold">
-        Authors
-    </h1>
-</div>
+<pagination [totalItems]="totalResults" [itemsPerPage]="authorService.pageSize" (pageChanged)="loadPage($event.page)"></pagination>
 <div *ngFor="let author of authors">
     {{author.name}}
 </div>

@@ -4,26 +4,20 @@
         <button class="btn-close" data-bs-dismiss="modal" (click)="modalRef?.hide()"></button>
     </div>
     <div class="modal-body">
-        <small *ngFor="let message of errorMap.get('unknown')" class="m-3 text-danger">
-            {{message}}
-        </small>
+        <div *ngIf="errorService.globalError != null" class="m-3">
+            <small class="text-danger">
+                Error {{errorService.globalErrorCode}} : {{errorService.globalError}}
+            </small>
+        </div>
         <div class="m-3">
             <label for="usernameSignUpInput" class="form-label">Username</label>
             <input type="text" id="usernameSignUpInput" class="form-control" [(ngModel)]="signUpDto.username"
-                (keydown.enter)="signUp()" [class.is-invalid]="errorMap.has('name')"
-                [class.is-valid]="errorMap.size > 0 && !errorMap.has('name') && !errorMap.has('unknown')">
-            <div *ngFor="let message of errorMap.get('name')" class="invalid-feedback">
-                {{message}}
-            </div>
+                (keydown.enter)="signUp()" validated="username">
         </div>
         <div class="m-3">
             <label for="emailSignUpInput" class="form-label">Email (optional)</label>
             <input type="email" id="emailSignUpInput" class="form-control" [(ngModel)]="signUpDto.email"
-                (keydown.enter)="signUp()" [class.is-invalid]="errorMap.has('email')"
-                [class.is-valid]="errorMap.size > 0 && !errorMap.has('email') && !errorMap.has('unknown')">
-            <div *ngFor="let message of errorMap.get('email')" class="invalid-feedback">
-                {{message}}
-            </div>
+                (keydown.enter)="signUp()" validated="email">
             <div class="form-text">
                 This email will only be used as a password recovery method
             </div>
@@ -31,42 +25,30 @@
         <div class="m-3">
             <label for="tokenSignUpInput" class="form-label">Registration token</label>
             <input type="text" id="tokenSignUpInput" class="form-control" [(ngModel)]="signUpDto.token"
-                (keydown.enter)="signUp()" [class.is-invalid]="errorMap.has('token')"
-                [class.is-valid]="errorMap.size > 0 && !errorMap.has('token') && !errorMap.has('unknown')">
+                (keydown.enter)="signUp()" validated="token">
             <div class="form-text">
                 <span>
-                    Registration requires a token provided by an administrator or a trusted user.
+                    Registration requires a token provided by an administrator or a trusted contributor.
                 </span>
                 <a
-                    href="mailto:{{contactEmail}}?subject=Registration token request&body=Please explain in a few words why you want to contribute to this project">Ask
+                    href="mailto:{{config.CONTACT_EMAIL}}?subject=Registration token request&body=Please explain in a few words why you want to contribute to this project">Ask
                     for a token</a>
-            </div>
-            <div *ngFor="let message of errorMap.get('token')" class="invalid-feedback">
-                {{message}}
             </div>
         </div>
         <div class="m-3">
             <label for="passwordSignUpInput" class="form-label">Password</label>
             <input type="password" id="passwordSignUpInput" class="form-control" [(ngModel)]="signUpDto.password"
-                (keydown.enter)="signUp()" [class.is-invalid]="errorMap.has('password')"
-                [class.is-valid]="errorMap.size > 0 && !errorMap.has('password') && !errorMap.has('unknown')">
-            <div *ngFor="let message of errorMap.get('password')" class="invalid-feedback">
-                {{message}}
-            </div>
+                (keydown.enter)="signUp()" validated="password">
         </div>
         <div class="m-3">
             <label for="passwordConfirmationSignUpInput" class="form-label">Password confirmation</label>
             <input type="password" id="passwordConfirmationSignUpInput" class="form-control"
                 [(ngModel)]="signUpDto.passwordConfirmation" (keydown.enter)="signUp()"
-                [class.is-invalid]="errorMap.has('passwordConfirmation')"
-                [class.is-valid]="errorMap.size > 0 && !errorMap.has('passwordConfirmation') && !errorMap.has('unknown')">
-            <div *ngFor="let message of errorMap.get('passwordConfirmation')" class="invalid-feedback">
-                {{message}}
-            </div>
+                validated="passwordConfirmation">
         </div>
     </div>
     <div class="modal-footer justify-content-center">
-        <button type="submit" class="btn btn-lg btn-info" (click)="signUp()" [disabled]="loading">
+        <button type="submit" class="btn btn-lg btn-success" (click)="signUp()" [disabled]="loading">
             <div *ngIf="loading" class="spinner-border"></div>
             <div *ngIf="!loading">Sign up</div>
         </button>

@@ -1,16 +1,16 @@
 <div class="row align-items-center justify-content-center">
     <div class="col-auto">
-        Logged as <span class="fw-bold fst-italic"> {{config.contributor?.username}} </span>
-        <img *ngIf="config.contributor?.role === 'Administrator'" id="admin-logo" src="assets/img/admin.png"
+        Logged as <span class="fw-bold fst-italic"> {{contributorService.contributor?.username}} </span>
+        <img *ngIf="contributorService.contributor?.role === 'Administrator'" id="admin-logo" src="assets/img/admin.png"
             title="Administrator">
     </div>
-    <div class="col-auto dropdown" dropdown [isAnimated]="true">
+    <div class="col-auto dropdown" dropdown>
         <button type="button" class="btn btn-dark dropdown-toggle" dropdownToggle>
         </button>
         <ul class="dropdown-menu dropdown-menu-end" *dropdownMenu>
             <li><a class="dropdown-item">Dashboard</a></li>
             <li><a class="dropdown-item">Settings</a></li>
-            <div *ngIf="config.contributor?.role === 'Administrator'">
+            <div *ngIf="contributorService.contributor?.role === 'Administrator'">
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -27,5 +27,6 @@
     </div>
 </div>
 <div class="position-fixed bottom-0 start-50 translate-middle-x">
-<alert *ngIf="token !== null" [type]="'info'" [dismissible]="true" (onClose)="token = null">Token created : {{token.value}}</alert>
+    <alert *ngIf="token !== null" [type]="'info'" [dismissible]="true" (onClose)="token = null">Token created :
+        {{token.value}}</alert>
 </div>

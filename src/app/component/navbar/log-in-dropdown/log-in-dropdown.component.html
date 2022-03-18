@@ -1,31 +1,25 @@
-<div class="dropdown" dropdown [isAnimated]="true" [(isOpen)]="isOpen" [insideClick]="true">
-    <button class="btn btn-secondary dropdown-toggle" dropdownToggle>
+<div class="dropdown" dropdown [(isOpen)]="isOpen" [autoClose]="false">
+    <button class="btn btn-light dropdown-toggle" dropdownToggle>
         Log in
     </button>
-    <div class="dropdown-menu dropdown-menu-end" *dropdownMenu>
-        <small *ngFor="let message of errorMap.get('unknown')" class="m-3 text-danger">
-            {{message}}
-        </small>
+    <div class="dropdown-menu dropdown-menu-right animated-dropdown" *dropdownMenu>
+        <div *ngIf="errorService.globalError != null" class="m-3">
+            <small class="text-danger">
+                Error {{errorService.globalErrorCode}} : {{errorService.globalError}}
+            </small>
+        </div>
         <div class="m-3">
             <label for="usernameLogInInput" class="form-label">Username</label>
             <input type="text" id="usernameLogInInput" class="form-control" [(ngModel)]="logInDto.username"
-                (keydown.enter)="logIn()" [class.is-invalid]="errorMap.has('name')"
-                [class.is-valid]="errorMap.size > 0 && !errorMap.has('name') && !errorMap.has('unknown')">
-            <div *ngFor="let message of errorMap.get('name')" class="invalid-feedback">
-                {{message}}
-            </div>
+                (keydown.enter)="logIn()" validated="username">
         </div>
         <div class="m-3">
             <label for="passwordLogInInput" class="form-label">Password</label>
             <input type="password" id="passwordLogInInput" class="form-control" [(ngModel)]="logInDto.password"
-                (keydown.enter)="logIn()" [class.is-invalid]="errorMap.has('password')"
-                [class.is-valid]="errorMap.size > 0 && !errorMap.has('password') && !errorMap.has('unknown')">
-            <div *ngFor="let message of errorMap.get('password')" class="invalid-feedback">
-                {{message}}
-            </div>
+                (keydown.enter)="logIn()" validated="password">
         </div>
         <div class="d-flex justify-content-center m-3">
-            <button class="btn btn-lg btn-info" (click)="logIn()" [disabled]="loading">
+            <button class="btn btn-lg btn-primary" (click)="logIn()" [disabled]="loading">
                 <div *ngIf="loading" class="spinner-border"></div>
                 <div *ngIf="!loading">Log in</div>
             </button>

@@ -10,7 +10,7 @@ import { AppConfig } from 'src/app/service/util/AppConfig';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  constructor(public config: AppConfig) { }
+  constructor(public contributorService: ContributorService) { }
 
   ngOnInit(): void {
   }

@@ -6,15 +6,7 @@ import { ContributorService } from "../contributor.service";
     providedIn: 'root'
 })
 export class AppConfig {
-    static API_ENDPOINT = 'http://localhost:8080';
+    API_ENDPOINT = 'http://localhost:8080';
 
-    static CONTACT_EMAIL = 'admin@admin.com';
-
-    contributor: Contributor | null = null;
-
-    constructor(private userService: ContributorService) {
-        userService.getAuthenticatedContributer().subscribe({
-            next: contributor => this.contributor = contributor
-        });
-    }
+    CONTACT_EMAIL = 'admin@admin.com';
 }

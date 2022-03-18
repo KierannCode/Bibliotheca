@@ -12,13 +12,13 @@ import { AppConfig } from 'src/app/service/util/AppConfig';
 export class ContributorDropdownComponent implements OnInit {
   token: Token | null = null;
 
-  constructor(private contributorService: ContributorService, private tokenService: TokenService, public config: AppConfig) { }
+  constructor(public contributorService: ContributorService, private tokenService: TokenService, public config: AppConfig) { }
 
   ngOnInit(): void {
   }
 
   logOut(): void {
-    this.contributorService.logOut().subscribe(() => this.config.contributor = null);
+    this.contributorService.logOut().subscribe(() => this.contributorService.contributor = null);
   }
 
   generateToken() {

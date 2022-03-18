@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthorListComponent } from './component/author/author-list/author-list.component';
+import { AuthorComponent } from './component/author/author/author.component';
 import { BookListComponent } from './component/book/book-list/book-list.component';
 import { ErrorComponent } from './component/error/error.component';
 import { HomeComponent } from './component/home/home.component';
@@ -16,7 +16,7 @@ const routes: Routes = [
     },{
       path: 'home', component: HomeComponent
     }, {
-      path: 'authors', component: AuthorListComponent
+      path: 'authors', component: AuthorComponent
     }, {
       path: 'books', component: BookListComponent
     }]

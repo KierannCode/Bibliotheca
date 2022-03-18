@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+.dropdown-menu {
+    animation-duration: 0.2s;
+    animation-name: dropdown;
+}
+
+@keyframes dropdown {
+    0% {
+        transform: translate(50%, -50%) scale(0, 0) ;
+    }
+  
+    100% {
+        transform: translate(0, 0) scale(1, 1);
+        display: block;
+    }
+}

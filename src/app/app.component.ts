@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ErrorService } from './service/error.service';
 
 @Component({
   selector: 'app-root',

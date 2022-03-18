@@ -1,0 +1,11 @@
+<div class="py-5 bg-primary text-center">
+    <h1 class="h1 fw-bold">
+        Authors
+    </h1>
+    <button type="button" class="btn btn-primary" (click)="showSearch = !showSearch">Advanced search
+    </button>
+</div>
+<div id="collapseBasic" [collapse]="showSearch" [isAnimated]="true">
+    <app-author-search></app-author-search>
+</div>
+<app-author-list></app-author-list>

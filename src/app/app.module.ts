@@ -21,6 +21,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ContributorDropdownComponent } from './component/navbar/contributor-dropdown/contributor-dropdown.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { ValidationDirective } from './service/util/ValidationDirective';
+import { AuthorComponent } from './component/author/author/author.component';
+import { AuthorSearchComponent } from './component/author/author-search/author-search.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,10 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     SignUpModalComponent,
     LogInDropdownComponent,
     AuthorItemComponent,
-    ContributorDropdownComponent
+    ContributorDropdownComponent,
+    ValidationDirective,
+    AuthorComponent,
+    AuthorSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +55,9 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    CollapseModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

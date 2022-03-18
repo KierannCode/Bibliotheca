@@ -10,11 +10,11 @@ import { Page } from './util/Page';
 })
 export class AuthorService {
 
-  pageSize: number = 20;
+  pageSize: number = 2;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public config: AppConfig) { }
 
   getAuthors(page: number, sort: string, order: string): Observable<Page<Author>> {
-    return this.http.get<Page<Author>>(`${AppConfig.API_ENDPOINT}/authors?page=${encodeURIComponent(page)}&size=${encodeURIComponent(this.pageSize)}&sort=${encodeURIComponent(sort)},${encodeURIComponent(order)}`, { withCredentials: true });
+    return this.http.get<Page<Author>>(`${this.config.API_ENDPOINT}/authors?page=${encodeURIComponent(page)}&size=${encodeURIComponent(this.pageSize)}&sort=${encodeURIComponent(sort)},${encodeURIComponent(order)}`, { withCredentials: true });
   }
 }

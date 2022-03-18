@@ -9,9 +9,9 @@ import { AppConfig } from './util/AppConfig';
 })
 export class TokenService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private config: AppConfig) { }
 
   generateToken(): Observable<Token> {
-    return this.http.post<Token>(`${AppConfig.API_ENDPOINT}/token`, {}, {withCredentials: true});
+    return this.http.post<Token>(`${this.config.API_ENDPOINT}/token`, {}, {withCredentials: true});
   }
 }
