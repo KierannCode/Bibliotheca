@@ -1,1 +1,78 @@
-<p>author-search works!</p>
+<div id="collapseBasic" [collapse]="hideSearch" [isAnimated]="true" class="bg-light">
+    <div class="row p-3">
+        <div class="col-auto">
+            <label for="authorNameSearchInput" class="form-label">Name</label>
+            <input type="search" id="authorNameSearchInput" class="form-control" [(ngModel)]="authorSearchDto.name"
+                (keydown.enter)="loadPage()">
+        </div>
+    </div>
+    <div class="row p-3 align-items-center">
+        <label for="authorChapterCountSearchInput" class="form-label">Chapter count</label>
+        <div class="col-auto">
+            <div class="form-text">
+                Between
+            </div>
+        </div>
+        <div class="col-auto">
+            <input type="number" id="authorChapterCountSearchInput" class="form-control"
+                [(ngModel)]="authorSearchDto.minChapterCount" (keydown.enter)="loadPage()">
+        </div>
+        <div class="col-auto">
+            <div class="form-text">
+                and
+            </div>
+        </div>
+        <div class="col-auto">
+            <input type="number" class="form-control" [(ngModel)]="authorSearchDto.maxChapterCount"
+                (keydown.enter)="loadPage()">
+        </div>
+    </div>
+</div>
+<div class="my-3">
+    <div class="row justify-content-between">
+        <div class="col-auto">
+            <div class="row align-items-center">
+                <div class="col">
+                    <pagination [boundaryLinks]="true" [totalItems]="totalResults" [maxSize]="maxSize"
+                        [itemsPerPage]="authorService.pageSize" previousText="&lsaquo;" nextText="&rsaquo;"
+                        firstText="&laquo;" lastText="&raquo;"
+                        (pageChanged)="pageable.page = $event.page - 1; loadPage()">
+                    </pagination>
+                </div>
+                <div *ngIf="authors.length > 0" class="col-auto">
+                    <div>
+                        Showing results {{pageable.page * authorService.pageSize + 1}} &#8212; {{pageable.page *
+                        authorService.pageSize + authors.length}} of {{totalResults}}
+                    </div>
+                </div>
+                <div *ngIf="authors.length == 0" class="col-auto text-danger">
+                    No results
+                </div>
+                <div *ngIf="loading" class="col">
+                    <div class="spinner-border"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    Sort by
+                </div>
+                <div class="col">
+                    <select [(ngModel)]="pageable.sort" class="form-select" (ngModelChange)="loadPage()">
+                        <option value="id">Creation</option>
+                        <option value="romanizedName">Name</option>
+                        <option value="details.chapterCount">Chapter count</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select [(ngModel)]="pageable.order" class="form-select" (ngModelChange)="loadPage()">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-author-list [authors]="authors"></app-author-list>
+</div>

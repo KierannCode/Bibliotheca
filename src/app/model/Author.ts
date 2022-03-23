@@ -1,7 +1,8 @@
 export interface Author {
     id: number;
-    name: string;
-    releaseCount: number;
+    romanizedName: string;
+    originalName: string;
+    chapterCount: number;
     firstRelease: Date | null;
     lastRelease: Date | null;
 }

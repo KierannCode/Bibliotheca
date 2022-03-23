@@ -1,0 +1,29 @@
+<ng-template #template>
+    <div class="modal-header">
+        <h5 class="modal-title">New author</h5>
+        <button class="btn-close" data-bs-dismiss="modal" (click)="modalRef?.hide()"></button>
+    </div>
+    <div class="modal-body">
+        <div *ngIf="errorService.globalError != null" class="m-3">
+            <small class="text-danger">
+                Error {{errorService.globalErrorCode}} : {{errorService.globalError}}
+            </small>
+        </div>
+        <div class="m-3">
+            <label for="usernameSignUpInput" class="form-label">Romanized name</label>
+            <input type="text" id="usernameSignUpInput" class="form-control" [(ngModel)]="authorDto.romanizedName"
+                (keydown.enter)="createAuthor()" validated="romanizedName">
+        </div>
+        <div class="m-3">
+            <label for="usernameSignUpInput" class="form-label">Original name</label>
+            <input type="text" id="usernameSignUpInput" class="form-control" [(ngModel)]="authorDto.originalName"
+                (keydown.enter)="createAuthor()" validated="originalName">
+        </div>
+    </div>
+    <div class="modal-footer justify-content-center">
+        <button type="submit" class="btn btn-lg btn-success" (click)="createAuthor()" [disabled]="loading">
+            <div *ngIf="loading" class="spinner-border"></div>
+            <div *ngIf="!loading">Create</div>
+        </button>
+    </div>
+</ng-template>

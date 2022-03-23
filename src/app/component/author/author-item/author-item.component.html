@@ -1,1 +1,91 @@
-<p>author-item works!</p>
+<div class="card bg-secondary my-3">
+    <div class="card-body">
+        <div class="row g-0">
+            <!--div class="col-md-4">
+            <img src="..." class="card-img" alt="...">
+        </div-->
+            <div class="col">
+                <h5 class="card-title text-center">Author #{{author.id}}</h5>
+                <div class="row align-items-center card-field">
+                    <div class="col-4 text-end fw-bold">
+                        Romanized name :
+                    </div>
+                    <div *ngIf="authorDto.romanizedName === undefined" class="col-auto">
+                        {{author.romanizedName}}
+                    </div>
+                    <div *ngIf="authorDto.romanizedName === undefined" class="col-auto">
+                        <i class="bi bi-pencil btn btn-link p-0" title="modify"
+                            (click)="authorDto.romanizedName = author.romanizedName"></i>
+                    </div>
+                    <div *ngIf="authorDto.romanizedName !== undefined" class="col-auto">
+                        <input type="text" [(ngModel)]="authorDto.romanizedName" class="form-control">
+                    </div>
+                </div>
+                <div class="row align-items-center card-field">
+                    <div class="col-4 text-end fw-bold">
+                        Original name :
+                    </div>
+                    <div *ngIf="authorDto.originalName === undefined" class="col-auto">
+                        {{author.originalName}}
+                    </div>
+                    <div *ngIf="authorDto.originalName === undefined" class="col-auto">
+                        <i class="bi bi-pencil btn btn-link p-0" title="modify"
+                            (click)="authorDto.originalName = author.originalName"></i>
+                    </div>
+                    <div *ngIf="authorDto.originalName !== undefined" class="col-auto">
+                        <input type="text" [(ngModel)]="authorDto.originalName" class="form-control">
+                    </div>
+                </div>
+                <div class="row align-items-center card-field">
+                    <div class="col-4 text-end fw-bold">
+                        Release count :
+                    </div>
+                    <div class="col-auto">
+                        {{author.chapterCount}}
+                    </div>
+                </div>
+                <div class="row align-items-center card-field">
+                    <div class="col-4 text-end fw-bold">
+                        First release :
+                    </div>
+                    <div class="col-auto">
+                        {{author.firstRelease}}
+                    </div>
+                </div>
+                <div class="row align-items-center card-field">
+                    <div class="col-4 text-end fw-bold">
+                        Last release :
+                    </div>
+                    <div class="col-auto">
+                        {{author.lastRelease}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto vr"></div>
+            <div class="col-3">
+                <div class="d-flex flex-column h-100">
+                    <h5 class="text-center">Actions</h5>
+                    <div class="flex-fill d-flex flex-column align-items-center justify-content-center">
+                        <div *ngIf="modified()" class="m-2">
+                            <button class="btn btn-primary w-auto" (click)="update()" [disabled]="loadingUpdate">
+                                <div *ngIf="loadingUpdate" class="spinner-border"></div>
+                                <div *ngIf="!loadingUpdate">Apply changes</div>
+                            </button>
+                        </div>
+                        <div *ngIf="modified()" class="m-2">
+                            <button class="btn btn-warning w-auto" (click)="authorDto = {}">
+                                Discard changes
+                            </button>
+                        </div>
+                        <div class="m-2">
+                            <button class="btn btn-outline-danger" [disabled]="loadingDelete" (click)="delete()">
+                                <div *ngIf="loadingDelete" class="spinner-border"></div>
+                                <div *ngIf="!loadingDelete">Delete author</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

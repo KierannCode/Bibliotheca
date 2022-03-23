@@ -22,8 +22,7 @@ export class SignUpModalComponent implements OnInit {
 
   @ViewChild('template') modalTemplate?: TemplateRef<any>;
 
-  @Input()
-  parent!: LogInDropdownComponent;
+  @Input() parent!: LogInDropdownComponent;
 
   constructor(private contributorService: ContributorService, private modalService: BsModalService, public errorService: ErrorService, public config: AppConfig) { }
 
@@ -46,5 +45,6 @@ export class SignUpModalComponent implements OnInit {
 
   openModal() {
     this.modalRef = this.modalService.show(this.modalTemplate!);
+    this.modalService.onHide.subscribe(() => this.errorService.flushErrors());
   }
 }

@@ -13,3 +13,19 @@
         display: block;
     }
 }
+
+pagination ul {
+    margin-bottom: 0;
+}
+
+body {
+    background: linear-gradient(to right, dimgray, #222222 5%, #222222 95%, dimgray);
+}
+
+.title {
+    background-color: midnightblue;
+}
+
+.card-field {
+    height: 2.5rem;
+}

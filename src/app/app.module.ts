@@ -26,6 +26,7 @@ import { AuthorComponent } from './component/author/author/author.component';
 import { AuthorSearchComponent } from './component/author/author-search/author-search.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { CreateAuthorModalComponent } from './component/author/create-author-modal/create-author-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     ContributorDropdownComponent,
     ValidationDirective,
     AuthorComponent,
-    AuthorSearchComponent
+    AuthorSearchComponent,
+    CreateAuthorModalComponent
   ],
   imports: [
     BrowserModule,

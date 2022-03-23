@@ -1,25 +1,24 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { EventService } from './event.service';
 import { ErrorMap } from './util/ErrorMap';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorService {
-  updateValidation = new EventEmitter<void>();
-
-  validationErrors: ErrorMap = new ErrorMap;
+  validationErrors = new ErrorMap();
 
   globalErrorCode: number | null = null;
   globalError: string | null = null;
 
-  constructor() {
+  constructor(private eventService: EventService) {
   }
 
   setErrors(errorResponse: HttpErrorResponse): void {
     switch(errorResponse.status) {
       case 422:
-        this.validationErrors.import(errorResponse.error);
+        this.validationErrors = new ErrorMap(Object.entries(errorResponse.error));
         break;
       default:
         console.error(errorResponse);
@@ -27,12 +26,13 @@ export class ErrorService {
         this.globalError = errorResponse.message;
         break;
     }
-    this.updateValidation.emit();
+    this.eventService.updateValidation.emit();
   }
 
   flushErrors(): void {
-    this.validationErrors = new ErrorMap;
+    this.validationErrors = new ErrorMap();
     this.globalErrorCode = null;
     this.globalError = null;
+    this.eventService.updateValidation.emit();
   }
 }

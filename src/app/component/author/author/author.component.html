@@ -1,11 +1,18 @@
-<div class="py-5 bg-primary text-center">
-    <h1 class="h1 fw-bold">
+<div class="container-fluid py-4 title text-center">
+    <h2 class="h2 fw-bold">
         Authors
-    </h1>
-    <button type="button" class="btn btn-primary" (click)="showSearch = !showSearch">Advanced search
-    </button>
+    </h2>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <button class="btn btn-primary" (click)="hideSearch = !hideSearch">Search
+            </button>
+        </div>
+        <div *ngIf="contributorService.contributor" class="col-auto">
+            <button class="btn btn-primary" (click)="createAuthorModalComponent.openModal()">New author</button>
+            <app-create-author-modal [parent]="this"></app-create-author-modal>
+        </div>
+    </div>
 </div>
-<div id="collapseBasic" [collapse]="showSearch" [isAnimated]="true">
-    <app-author-search></app-author-search>
+<div class="container">
+    <app-author-search [hideSearch]="hideSearch"></app-author-search>
 </div>
-<app-author-list></app-author-list>

@@ -1,4 +1,3 @@
-<pagination [totalItems]="totalResults" [itemsPerPage]="authorService.pageSize" (pageChanged)="loadPage($event.page)"></pagination>
-<div *ngFor="let author of authors">
-    {{author.name}}
+<div *ngFor="let author of authors" class="m-3">
+    <app-author-item [author]="author"></app-author-item>
 </div>
