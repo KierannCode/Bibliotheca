@@ -69,7 +69,7 @@
                         <div *ngIf="modified()" class="m-2">
                             <button class="btn btn-primary w-auto" (click)="update()" [disabled]="loadingUpdate">
                                 <div *ngIf="loadingUpdate" class="spinner-border"></div>
-                                <div *ngIf="!loadingUpdate">Apply changes</div>
+                                <div *ngIf="!loadingUpdate">Save changes</div>
                             </button>
                         </div>
                         <div *ngIf="modified()" class="m-2">

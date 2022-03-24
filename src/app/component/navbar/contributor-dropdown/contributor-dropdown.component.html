@@ -1,7 +1,7 @@
 <div class="row align-items-center justify-content-center">
     <div class="col-auto">
         Logged as <span class="fw-bold fst-italic"> {{contributorService.contributor?.username}} </span>
-        <img *ngIf="contributorService.contributor?.role === 'Administrator'" id="admin-logo" src="assets/img/admin.png"
+        <img *ngIf="contributorService.contributor?.roleName === 'Administrator'" id="admin-logo" src="assets/img/admin.png"
             title="Administrator">
     </div>
     <div class="col-auto dropdown" dropdown>
@@ -10,7 +10,7 @@
         <ul class="dropdown-menu dropdown-menu-end" *dropdownMenu>
             <li><a class="dropdown-item">Dashboard</a></li>
             <li><a class="dropdown-item">Settings</a></li>
-            <div *ngIf="contributorService.contributor?.role === 'Administrator'">
+            <div *ngIf="contributorService.contributor?.roleName === 'Administrator'">
                 <li>
                     <hr class="dropdown-divider">
                 </li>
