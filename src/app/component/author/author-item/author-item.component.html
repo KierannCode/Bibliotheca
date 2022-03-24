@@ -18,7 +18,8 @@
                             (click)="authorDto.romanizedName = author.romanizedName"></i>
                     </div>
                     <div *ngIf="authorDto.romanizedName !== undefined" class="col-auto">
-                        <input type="text" [(ngModel)]="authorDto.romanizedName" class="form-control">
+                        <input type="text" [(ngModel)]="authorDto.romanizedName" class="form-control"
+                            (keydown.enter)="update()">
                     </div>
                 </div>
                 <div class="row align-items-center card-field">
@@ -33,7 +34,8 @@
                             (click)="authorDto.originalName = author.originalName"></i>
                     </div>
                     <div *ngIf="authorDto.originalName !== undefined" class="col-auto">
-                        <input type="text" [(ngModel)]="authorDto.originalName" class="form-control">
+                        <input type="text" [(ngModel)]="authorDto.originalName" class="form-control"
+                            (keydown.enter)="update()">
                     </div>
                 </div>
                 <div class="row align-items-center card-field">
@@ -60,9 +62,20 @@
                         {{author.lastRelease}}
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col text-end mx-2">
+                        Created on {{author.creation.timestamp.toLocaleString()}} by
+                        {{author.creation.contributor.username}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-end mx-2">
+                        Last updated on {{author.lastUpdate.timestamp.toLocaleString()}} by
+                        {{author.lastUpdate.contributor.username}}</div>
+                </div>
             </div>
             <div class="col-auto vr"></div>
-            <div class="col-3">
+            <div class="col-2">
                 <div class="d-flex flex-column h-100">
                     <h5 class="text-center">Actions</h5>
                     <div class="flex-fill d-flex flex-column align-items-center justify-content-center">

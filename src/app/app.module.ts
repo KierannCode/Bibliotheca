@@ -27,6 +27,7 @@ import { AuthorSearchComponent } from './component/author/author-search/author-s
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CreateAuthorModalComponent } from './component/author/create-author-modal/create-author-modal.component';
+import { AlertComponent } from './component/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { CreateAuthorModalComponent } from './component/author/create-author-mod
     ValidationDirective,
     AuthorComponent,
     AuthorSearchComponent,
-    CreateAuthorModalComponent
+    CreateAuthorModalComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

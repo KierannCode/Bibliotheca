@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import { AuthorDto } from 'src/app/dto/AuthorDto';
 import { Author } from 'src/app/model/Author';
 import { AuthorService } from 'src/app/service/author.service';
+import { ErrorService } from 'src/app/service/error.service';
 import { EventService } from 'src/app/service/event.service';
 
 @Component({
@@ -17,7 +20,8 @@ export class AuthorItemComponent implements OnInit {
 
   loadingDelete = false;
 
-  constructor(private authorService: AuthorService, private eventService: EventService) { }
+  constructor(private authorService: AuthorService, private eventService: EventService, private errorService: ErrorService) {
+  }
 
   ngOnInit(): void {
   }
@@ -39,7 +43,8 @@ export class AuthorItemComponent implements OnInit {
   delete(): void {
     this.loadingDelete = true;
     this.authorService.deleteAuthor(this.author.id).subscribe({
-      next: () => this.eventService.updateAuthors.emit()
+      next: () => this.eventService.updateAuthors.emit(),
+      error: (errorResponse: HttpErrorResponse) => this.errorService.setErrors(errorResponse)
     }).add(() => this.loadingDelete = false);
   }
 }

@@ -1,0 +1,5 @@
+<div *ngIf="alert" class="alert-container">
+    <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert?.timeout" (onClosed)="alert = null">
+        {{alert.message}}
+    </alert>
+</div>

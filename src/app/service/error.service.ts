@@ -9,9 +9,6 @@ import { ErrorMap } from './util/ErrorMap';
 export class ErrorService {
   validationErrors = new ErrorMap();
 
-  globalErrorCode: number | null = null;
-  globalError: string | null = null;
-
   constructor(private eventService: EventService) {
   }
 
@@ -21,9 +18,7 @@ export class ErrorService {
         this.validationErrors = new ErrorMap(Object.entries(errorResponse.error));
         break;
       default:
-        console.error(errorResponse);
-        this.globalErrorCode = errorResponse.status;
-        this.globalError = errorResponse.message;
+        this.eventService.createAlert.emit({type: 'danger', message: errorResponse.error, timeout: 10000});
         break;
     }
     this.eventService.updateValidation.emit();
@@ -31,8 +26,6 @@ export class ErrorService {
 
   flushErrors(): void {
     this.validationErrors = new ErrorMap();
-    this.globalErrorCode = null;
-    this.globalError = null;
     this.eventService.updateValidation.emit();
   }
 }

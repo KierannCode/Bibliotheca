@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Query, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Author } from 'src/app/model/Author';
+import { AuthorItemComponent } from '../author-item/author-item.component';
 
 @Component({
   selector: 'app-author-list',
@@ -8,6 +9,8 @@ import { Author } from 'src/app/model/Author';
 })
 export class AuthorListComponent implements OnInit {
   @Input() authors!: Array<Author>;
+
+  @ViewChildren(AuthorItemComponent) authorItemComponents!: QueryList<AuthorItemComponent>;
 
   constructor() {
   }

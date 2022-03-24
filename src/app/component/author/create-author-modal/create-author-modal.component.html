@@ -4,11 +4,6 @@
         <button class="btn-close" data-bs-dismiss="modal" (click)="modalRef?.hide()"></button>
     </div>
     <div class="modal-body">
-        <div *ngIf="errorService.globalError != null" class="m-3">
-            <small class="text-danger">
-                Error {{errorService.globalErrorCode}} : {{errorService.globalError}}
-            </small>
-        </div>
         <div class="m-3">
             <label for="usernameSignUpInput" class="form-label">Romanized name</label>
             <input type="text" id="usernameSignUpInput" class="form-control" [(ngModel)]="authorDto.romanizedName"

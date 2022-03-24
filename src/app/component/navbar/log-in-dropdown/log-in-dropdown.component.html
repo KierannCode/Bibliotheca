@@ -3,11 +3,6 @@
         Log in
     </button>
     <div class="dropdown-menu dropdown-menu-right animated-dropdown" *dropdownMenu>
-        <div *ngIf="errorService.globalError != null" class="m-3">
-            <small class="text-danger">
-                Error {{errorService.globalErrorCode}} : {{errorService.globalError}}
-            </small>
-        </div>
         <div class="m-3">
             <label for="usernameLogInInput" class="form-label">Username</label>
             <input type="text" id="usernameLogInInput" class="form-control" [(ngModel)]="logInDto.username"
