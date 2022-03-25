@@ -1,11 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthorSearchDto } from 'src/app/dto/AuthorSearchDto';
-import { Author } from 'src/app/model/Author';
 import { AuthorService } from 'src/app/service/author.service';
-import { EventService } from 'src/app/service/event.service';
-import { Pageable } from 'src/app/service/util/Pageable';
-import { AuthorItemComponent } from '../author-item/author-item.component';
-import { AuthorListComponent } from '../author-list/author-list.component';
+import { EventService } from 'src/app/util/service/event.service';
+import { ErrorService } from 'src/app/util/service/error.service';
 
 @Component({
   selector: 'app-author-search',
@@ -13,40 +10,26 @@ import { AuthorListComponent } from '../author-list/author-list.component';
   styleUrls: ['./author-search.component.css']
 })
 export class AuthorSearchComponent implements OnInit {
-  @Input() hideSearch = true;
+  isVisible = false;
 
   authorSearchDto: AuthorSearchDto = {};
 
-  maxSize = 7;
-  pageable: Pageable = { page: 0, sort: 'id', order: 'desc' };
-
-  loading = true;
-
-  authors = new Array<Author>();
-  totalResults = 0;
-
-  @ViewChild(AuthorListComponent) authorListComponent!: AuthorListComponent;
-
-  constructor(public authorService: AuthorService, eventService: EventService) {
-    this.loadPage();
-    eventService.updateAuthors.subscribe(() => this.loadPage());
+  constructor(private eventService: EventService, private errorService: ErrorService) {
   }
 
   ngOnInit(): void {
   }
 
-  loadPage() {
-    let modified = false;
-    this.authorListComponent?.authorItemComponents?.forEach((authorItemComponent) => modified ||= authorItemComponent.modified());
-    console.log(modified);
-    if (!modified || confirm('The Changes won\'t be saved, are you sure?')) {
-      this.loading = true;
-      this.authorService.getAuthors(this.authorSearchDto, this.pageable).subscribe({
-        next: (page) => {
-          this.authors = page.content;
-          this.totalResults = page.totalElements;
-        }
-      }).add(() => this.loading = false);
-    }
+  expandSearch(): void {
+    this.errorService.flushErrors();
+    this.isVisible = true;
+  }
+
+  collapseSearch(): void {
+    this.isVisible = false;
+  }
+
+  submit() {
+    this.eventService.authorsUpdateEmitter.emit();
   }
 }

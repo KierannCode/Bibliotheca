@@ -1,12 +1,11 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { SignUpDto } from 'src/app/dto/SignUpDto';
-import { ErrorMap } from 'src/app/service/util/ErrorMap';
-import { AppConfig } from 'src/app/service/util/AppConfig';
+import { AppConfig } from 'src/app/util/AppConfig';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { LogInDropdownComponent } from '../log-in-dropdown/log-in-dropdown.component';
 import { ContributorService } from 'src/app/service/contributor.service';
-import { ErrorService } from 'src/app/service/error.service';
+import { ErrorService } from 'src/app/util/service/error.service';
+import { Loading } from 'src/app/util/Loading';
 
 @Component({
   selector: 'app-sign-up-modal',
@@ -14,11 +13,11 @@ import { ErrorService } from 'src/app/service/error.service';
   styleUrls: ['./sign-up-modal.component.css']
 })
 export class SignUpModalComponent implements OnInit {
-  modalRef?: BsModalRef;
+  modalRef!: BsModalRef;
 
   signUpDto: SignUpDto = { username: '', password: '' };
 
-  loading = false;
+  loadingSignUp = new Loading();
 
   @ViewChild('template') modalTemplate?: TemplateRef<any>;
 
@@ -30,21 +29,20 @@ export class SignUpModalComponent implements OnInit {
   }
 
   signUp(): void {
-    this.errorService.flushErrors();
-    this.loading = true;
-    this.contributorService.signUp(this.signUpDto).subscribe({
-      next: (contributor) => {
+    this.contributorService.signUp(this.signUpDto).subscribe((contributor) => {
         this.modalRef?.hide();
         this.parent.logInDto.username = contributor.username;
         this.parent.logInDto.password = '';
-        this.parent.isOpen = true;
-      },
-      error: (errorResponse: HttpErrorResponse) => this.errorService.setErrors(errorResponse)
-    }).add(() => this.loading = false);
+        this.parent.expandDropdown();
+      }, this.loadingSignUp, (contributor) => `Contributor '${contributor.username}' successfully registered`);
   }
 
   openModal() {
+    this.errorService.flushErrors();
     this.modalRef = this.modalService.show(this.modalTemplate!);
-    this.modalService.onHide.subscribe(() => this.errorService.flushErrors());
+  }
+
+  closeModal() {
+    this.modalRef.hide();
   }
 }

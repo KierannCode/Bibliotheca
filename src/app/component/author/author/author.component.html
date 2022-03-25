@@ -4,7 +4,11 @@
     </h2>
     <div class="row justify-content-center">
         <div class="col-auto">
-            <button class="btn btn-primary" (click)="hideSearch = !hideSearch">Search <span *ngIf="hideSearch">&#11167;</span><span *ngIf="!hideSearch">&#11165;</span>
+            <button *ngIf="!authorSearchComponent?.isVisible" class="btn btn-primary" (click)="authorSearchComponent.expandSearch()">
+                Search &#11167;
+            </button>
+            <button *ngIf="authorSearchComponent?.isVisible" class="btn btn-primary" (click)="authorSearchComponent.collapseSearch()">
+                Search &#11167;
             </button>
         </div>
         <div *ngIf="contributorService.contributor" class="col-auto">
@@ -14,5 +18,53 @@
     </div>
 </div>
 <div class="container">
-    <app-author-search [hideSearch]="hideSearch"></app-author-search>
+    <app-author-search></app-author-search>
+    <div class="my-3">
+        <div class="row justify-content-between">
+            <div class="col-auto">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <pagination [boundaryLinks]="true" [totalItems]="totalResults" [maxSize]="maxSize"
+                            [itemsPerPage]="authorService.pageSize" previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="&laquo;" lastText="&raquo;"
+                            (pageChanged)="changePage($event.page - 1)">
+                        </pagination>
+                    </div>
+                    <div *ngIf="loadingPage.isOver()" class="col-auto">
+                        <div *ngIf="totalResults> 0">
+                            Showing results {{firstItem}} &#8212; {{lastItem}} of {{totalResults}}
+                        </div>
+                        <div *ngIf="totalResults == 0" class="text-danger">
+                            No results
+                        </div>
+                    </div>
+                    <div *ngIf="!loadingPage.isOver()" class="col-auto">
+                        <div class="spinner-border"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        Sort by
+                    </div>
+                    <div class="col">
+                        <select [(ngModel)]="pageable.sort" class="form-select" (ngModelChange)="requestPage()">
+                            <option value="id">Creation</option>
+                            <option value="lastUpdate.timestamp">Last update</option>
+                            <option value="romanizedName">Name</option>
+                            <option value="details.chapterCount">Chapter count</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select [(ngModel)]="pageable.order" class="form-select" (ngModelChange)="requestPage()">
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-author-list></app-author-list>
+    </div>
 </div>

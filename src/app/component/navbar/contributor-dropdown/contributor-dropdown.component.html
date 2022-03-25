@@ -1,9 +1,7 @@
 <div class="row align-items-center justify-content-center">
     <div class="col-auto">
         Logged as <span class="fw-bold fst-italic"> {{contributorService.contributor?.username}} </span>
-        <i class="bi bi-key text-primary"></i>
-        <img *ngIf="contributorService.contributor?.roleName === 'Administrator'" id="admin-logo" src="assets/img/admin.png"
-            title="Administrator">
+        <i title="Administrator" class="bi bi-key"></i>
     </div>
     <div class="col-auto dropdown" dropdown>
         <button type="button" class="btn btn-light dropdown-toggle" dropdownToggle>
@@ -26,8 +24,4 @@
                     out</button></li>
         </ul>
     </div>
-</div>
-<div class="position-fixed bottom-0 start-50 translate-middle-x">
-    <alert *ngIf="token !== null" [type]="'info'" [dismissible]="true" (onClose)="token = null">Token created :
-        {{token.value}}</alert>
 </div>

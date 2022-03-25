@@ -1,7 +1,7 @@
 <ng-template #template>
     <div class="modal-header">
         <h5 class="modal-title">Account registration</h5>
-        <button class="btn-close" data-bs-dismiss="modal" (click)="modalRef?.hide()"></button>
+        <button class="btn-close" data-bs-dismiss="modal" (click)="closeModal()"></button>
     </div>
     <div class="modal-body">
         <div class="m-3">
@@ -43,9 +43,9 @@
         </div>
     </div>
     <div class="modal-footer justify-content-center">
-        <button type="submit" class="btn btn-lg btn-success" (click)="signUp()" [disabled]="loading">
-            <div *ngIf="loading" class="spinner-border"></div>
-            <div *ngIf="!loading">Sign up</div>
+        <button type="submit" class="btn btn-lg btn-success" (click)="signUp()" [disabled]="!loadingSignUp.isOver()">
+            <div *ngIf="!loadingSignUp.isOver()" class="spinner-border"></div>
+            <div *ngIf="loadingSignUp.isOver()">Sign up</div>
         </button>
     </div>
 </ng-template>

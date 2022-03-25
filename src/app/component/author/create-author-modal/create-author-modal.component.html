@@ -1,7 +1,7 @@
 <ng-template #template>
     <div class="modal-header">
         <h5 class="modal-title">New author</h5>
-        <button class="btn-close" data-bs-dismiss="modal" (click)="modalRef?.hide()"></button>
+        <button class="btn-close" data-bs-dismiss="modal" (click)="closeModal()"></button>
     </div>
     <div class="modal-body">
         <div class="m-3">
@@ -16,9 +16,9 @@
         </div>
     </div>
     <div class="modal-footer justify-content-center">
-        <button type="submit" class="btn btn-lg btn-success" (click)="createAuthor()" [disabled]="loading">
-            <div *ngIf="loading" class="spinner-border"></div>
-            <div *ngIf="!loading">Create</div>
+        <button type="submit" class="btn btn-lg btn-success" (click)="createAuthor()" [disabled]="!loadingCreate.isOver()">
+            <div *ngIf="!loadingCreate.isOver()" class="spinner-border"></div>
+            <div *ngIf="loadingCreate.isOver()">Create</div>
         </button>
     </div>
 </ng-template>

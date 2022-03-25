@@ -21,7 +21,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ContributorDropdownComponent } from './component/navbar/contributor-dropdown/contributor-dropdown.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { ValidationDirective } from './service/util/ValidationDirective';
+import { ValidationDirective } from './util/ValidationDirective';
 import { AuthorComponent } from './component/author/author/author.component';
 import { AuthorSearchComponent } from './component/author/author-search/author-search.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';

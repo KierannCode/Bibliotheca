@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { EventService } from 'src/app/util/service/event.service';
 
 @Component({
   selector: 'app-error',
@@ -7,10 +8,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./error.component.css']
 })
 export class ErrorComponent implements OnInit {
-  code!: number;
-
-  constructor(private route:ActivatedRoute) {
-    route.params.subscribe(params => this.code = params['code']);
+  constructor(eventService: EventService, router: Router) {
+    eventService.alertEmitter.emit({ type: 'danger', message: 'The requested url does not exist' });
+    router.navigate(['home']);
   }
 
   ngOnInit(): void {

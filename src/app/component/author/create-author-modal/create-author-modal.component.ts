@@ -1,10 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AuthorDto } from 'src/app/dto/AuthorDto';
 import { AuthorService } from 'src/app/service/author.service';
-import { ErrorService } from 'src/app/service/error.service';
-import { EventService } from 'src/app/service/event.service';
+import { ErrorService } from 'src/app/util/service/error.service';
+import { EventService } from 'src/app/util/service/event.service';
+import { Loading } from 'src/app/util/Loading';
 import { AuthorComponent } from '../author/author.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class CreateAuthorModalComponent implements OnInit {
 
   authorDto: AuthorDto = {romanizedName: '', originalName: ''};
 
-  loading = false;
+  loadingCreate = new Loading();
 
   @ViewChild('template') modalTemplate?: TemplateRef<any>;
 
@@ -30,19 +30,18 @@ export class CreateAuthorModalComponent implements OnInit {
   }
 
   createAuthor(): void {
-    this.errorService.flushErrors();
-    this.loading = true;
-    this.authorService.createAuthor(this.authorDto).subscribe({
-      next: () => {
-        this.modalRef?.hide();
-        this.eventService.createAlert.emit({type: 'success', message: 'Author successfully created', timeout: 2000});
-        this.eventService.updateAuthors.emit();
-      },
-      error: (errorResponse: HttpErrorResponse) => this.errorService.setErrors(errorResponse)
-    }).add(() => this.loading = false);
+    this.authorService.createAuthor(this.authorDto).subscribe(() => {
+        this.closeModal();
+        this.eventService.authorsUpdateEmitter.emit();
+      }, this.loadingCreate, (author) => `Author '${author.romanizedName}' successfully created`);
   }
 
   openModal() {
+    this.errorService.flushErrors();
     this.modalRef = this.modalService.show(this.modalTemplate!);
+  }
+
+  closeModal() {
+    this.modalRef?.hide();
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from 'src/app/service/event.service';
-import { Alert } from 'src/app/service/util/Alert';
+import { EventService } from 'src/app/util/service/event.service';
+import { Alert } from 'src/app/util/Alert';
 
 @Component({
   selector: 'app-alert',
@@ -8,12 +8,18 @@ import { Alert } from 'src/app/service/util/Alert';
   styleUrls: ['./alert.component.css']
 })
 export class AlertComponent implements OnInit {
-  alert: Alert | null = null;
+  alerts = new Array<Alert>();
 
   constructor(eventService: EventService) {
-    eventService.createAlert.subscribe(alert => this.alert = alert);
+    eventService.alertEmitter.subscribe(alert => {
+      this.alerts.push(alert)
+    });
   }
 
   ngOnInit(): void {
+  }
+
+  removeAlert(index: number) {
+    this.alerts.splice(index, 1);
   }
 }
