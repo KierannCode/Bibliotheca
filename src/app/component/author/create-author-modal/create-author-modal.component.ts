@@ -35,6 +35,7 @@ export class CreateAuthorModalComponent implements OnInit {
     this.authorService.createAuthor(this.authorDto).subscribe({
       next: () => {
         this.modalRef?.hide();
+        this.eventService.createAlert.emit({type: 'success', message: 'Author successfully created', timeout: 2000});
         this.eventService.updateAuthors.emit();
       },
       error: (errorResponse: HttpErrorResponse) => this.errorService.setErrors(errorResponse)
