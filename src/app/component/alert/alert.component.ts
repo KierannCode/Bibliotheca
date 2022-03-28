@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { EventService } from 'src/app/util/service/event.service';
 import { Alert } from 'src/app/util/Alert';
 
@@ -7,16 +7,13 @@ import { Alert } from 'src/app/util/Alert';
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css']
 })
-export class AlertComponent implements OnInit {
+export class AlertComponent {
   alerts = new Array<Alert>();
 
   constructor(eventService: EventService) {
     eventService.alertEmitter.subscribe(alert => {
       this.alerts.push(alert)
     });
-  }
-
-  ngOnInit(): void {
   }
 
   removeAlert(index: number) {

@@ -12,10 +12,7 @@ import { ObservableService } from '../util/service/observable.service';
   providedIn: 'root'
 })
 export class ContributorService {
-  contributor: Contributor | null = null;
-
   constructor(private http: HttpClient, private config: AppConfig, private observableService: ObservableService) {
-    this.getAuthenticatedContributer().subscribe(contributor => this.contributor = contributor);
   }
 
   getAuthenticatedContributer(): ManagedObservable<Contributor> {

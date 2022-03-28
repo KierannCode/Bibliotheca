@@ -1,47 +1,38 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { AuthorDto } from 'src/app/dto/AuthorDto';
 import { AuthorService } from 'src/app/service/author.service';
-import { ErrorService } from 'src/app/util/service/error.service';
 import { EventService } from 'src/app/util/service/event.service';
 import { Loading } from 'src/app/util/Loading';
-import { AuthorComponent } from '../author/author.component';
+import { AuthorManager } from '../AuthorManager';
 
 @Component({
   selector: 'app-create-author-modal',
   templateUrl: './create-author-modal.component.html',
   styleUrls: ['./create-author-modal.component.css']
 })
-export class CreateAuthorModalComponent implements OnInit {
-  modalRef?: BsModalRef;
-
-  authorDto: AuthorDto = {romanizedName: '', originalName: ''};
+export class CreateAuthorModalComponent implements AfterViewInit {
+  createAuthorDto: AuthorDto = { romanizedName: '', originalName: '' };
 
   loadingCreate = new Loading();
 
-  @ViewChild('template') modalTemplate?: TemplateRef<any>;
+  @ViewChild('createAuthorModalTemplate') createAuthorModalTemplate!: TemplateRef<any>;
 
-  @Input() parent!: AuthorComponent;
-
-  constructor(private authorService: AuthorService, public errorService: ErrorService, private modalService: BsModalService, private eventService: EventService) {
+  constructor(public authorManager: AuthorManager, private authorService: AuthorService, private eventService: EventService) {
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
+    this.authorManager.createAuthorModalTemplate = this.createAuthorModalTemplate;
   }
 
   createAuthor(): void {
-    this.authorService.createAuthor(this.authorDto).subscribe(() => {
-        this.closeModal();
-        this.eventService.authorsUpdateEmitter.emit();
-      }, this.loadingCreate, (author) => `Author '${author.romanizedName}' successfully created`);
-  }
-
-  openModal() {
-    this.errorService.flushErrors();
-    this.modalRef = this.modalService.show(this.modalTemplate!);
-  }
-
-  closeModal() {
-    this.modalRef?.hide();
+    let observable = this.authorService.createAuthor(this.createAuthorDto);
+    observable.callback = () => {
+      this.authorManager.closeCreateAuthorModal();
+      this.createAuthorDto = { romanizedName: '', originalName: '' };
+      this.eventService.authorsUpdateEmitter.emit();
+    };
+    observable.loading = this.loadingCreate;
+    observable.successMessageBuilder = (author) => `Author '${author.romanizedName}' successfully created`;
+    observable.subscribe();
   }
 }

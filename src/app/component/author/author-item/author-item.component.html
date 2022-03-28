@@ -7,15 +7,15 @@
                     <div class="col-4 text-end fw-bold">
                         Romanized name :
                     </div>
-                    <div *ngIf="authorDto.romanizedName === undefined" class="col-auto">
+                    <div *ngIf="updateAuthorDto.romanizedName === undefined" class="col-auto">
                         {{author.romanizedName}}
                     </div>
-                    <div *ngIf="authorDto.romanizedName === undefined" class="col-auto">
+                    <div *ngIf="updateAuthorDto.romanizedName === undefined" class="col-auto">
                         <i class="bi bi-pencil btn btn-link p-0" title="modify"
-                            (click)="authorDto.romanizedName = author.romanizedName"></i>
+                            (click)="modify('romanizedName')"></i>
                     </div>
-                    <div *ngIf="authorDto.romanizedName !== undefined" class="col-auto">
-                        <input type="text" [(ngModel)]="authorDto.romanizedName" class="form-control"
+                    <div *ngIf="updateAuthorDto.romanizedName !== undefined" class="col-auto">
+                        <input type="text" [(ngModel)]="updateAuthorDto.romanizedName" class="form-control"
                             (keydown.enter)="updateAuthor()">
                     </div>
                 </div>
@@ -23,15 +23,15 @@
                     <div class="col-4 text-end fw-bold">
                         Original name :
                     </div>
-                    <div *ngIf="authorDto.originalName === undefined" class="col-auto">
+                    <div *ngIf="updateAuthorDto.originalName === undefined" class="col-auto">
                         {{author.originalName}}
                     </div>
-                    <div *ngIf="authorDto.originalName === undefined" class="col-auto">
+                    <div *ngIf="updateAuthorDto.originalName === undefined" class="col-auto">
                         <i class="bi bi-pencil btn btn-link p-0" title="modify"
-                            (click)="authorDto.originalName = author.originalName"></i>
+                            (click)="modify('originalName')"></i>
                     </div>
-                    <div *ngIf="authorDto.originalName !== undefined" class="col-auto">
-                        <input type="text" [(ngModel)]="authorDto.originalName" class="form-control"
+                    <div *ngIf="updateAuthorDto.originalName !== undefined" class="col-auto">
+                        <input type="text" [(ngModel)]="updateAuthorDto.originalName" class="form-control"
                             (keydown.enter)="updateAuthor()">
                     </div>
                 </div>
@@ -76,14 +76,14 @@
                 <div class="d-flex flex-column h-100">
                     <h5 class="text-center">Actions</h5>
                     <div class="flex-fill d-flex flex-column align-items-center justify-content-center">
-                        <div *ngIf="modified()" class="m-2">
+                        <div *ngIf="author.modified" class="m-2">
                             <button class="btn btn-primary w-auto" (click)="updateAuthor()" [disabled]="!loadingUpdate.isOver()">
                                 <div *ngIf="!loadingUpdate.isOver()" class="spinner-border"></div>
                                 <div *ngIf="loadingUpdate.isOver()">Save changes</div>
                             </button>
                         </div>
-                        <div *ngIf="modified()" class="m-2">
-                            <button class="btn btn-warning w-auto" (click)="resetAuthorDto()">
+                        <div *ngIf="author.modified" class="m-2">
+                            <button class="btn btn-warning w-auto" (click)="resetUpdateAuthorDto()">
                                 Discard changes
                             </button>
                         </div>

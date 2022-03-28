@@ -1,49 +1,33 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { LogInDto } from 'src/app/dto/LogInDto';
+import { Component } from '@angular/core';
 import { ContributorService } from 'src/app/service/contributor.service';
 import { AppConfig } from 'src/app/util/AppConfig';
-import { SignUpModalComponent } from '../sign-up-modal/sign-up-modal.component';
-import { ErrorService } from 'src/app/util/service/error.service';
 import { Loading } from 'src/app/util/Loading';
+import { NavbarManager } from '../NavbarManager';
 
 @Component({
   selector: 'app-log-in-dropdown',
   templateUrl: './log-in-dropdown.component.html',
   styleUrls: ['./log-in-dropdown.component.css']
 })
-export class LogInDropdownComponent implements OnInit {
-  isVisible = false;
-
-  logInDto: LogInDto = {};
-
+export class LogInDropdownComponent {
   loadingLogIn = new Loading();
 
-  @ViewChild(SignUpModalComponent) signUpModalComponent!: SignUpModalComponent;
-
-  constructor(private contributorService: ContributorService, public config: AppConfig, public errorService: ErrorService) {
-  }
-
-  ngOnInit(): void {
+  constructor(public navbarManager: NavbarManager, private contributorService: ContributorService, public config: AppConfig) {
   }
 
   logIn(): void {
-    this.contributorService.logIn(this.logInDto).subscribe((contributor) => {
-        this.contributorService.contributor = contributor
-        this.collapseDropdown();
-      }, this.loadingLogIn);
-  }
-
-  expandDropdown() {
-    this.errorService.flushErrors();
-    this.isVisible = true;
-  }
-
-  collapseDropdown() {
-    this.isVisible = false;
+    let observable = this.contributorService.logIn(this.navbarManager.logInDto);
+    observable.callback = contributor => {
+      this.navbarManager.collapseLogInDropdown();
+      this.navbarManager.logInDto = {};
+      this.navbarManager.contributor = contributor;
+    }
+    observable.loading = this.loadingLogIn;
+    observable.subscribe();
   }
 
   openSignUpModal() {
-    this.collapseDropdown();
-    this.signUpModalComponent.openModal();
+    this.navbarManager.collapseLogInDropdown();
+    this.navbarManager.openSignUpModal();
   }
 }

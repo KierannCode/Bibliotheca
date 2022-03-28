@@ -16,8 +16,8 @@
                     <a routerLinkActive="active" routerLink="books" class="nav-link">Books</a>
                 </li>
             </ul>
-            <app-log-in-dropdown *ngIf="contributorService.contributor == null"></app-log-in-dropdown>
-            <app-contributor-dropdown *ngIf="contributorService.contributor != null"></app-contributor-dropdown>
+            <app-log-in-dropdown *ngIf="navbarManager.contributor == null"></app-log-in-dropdown>
+            <app-contributor-dropdown *ngIf="navbarManager.contributor != null"></app-contributor-dropdown>
         </div>
     </div>
 </nav>

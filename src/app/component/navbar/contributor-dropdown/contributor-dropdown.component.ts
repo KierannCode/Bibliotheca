@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Token } from 'src/app/model/Token';
+import { Component } from '@angular/core';
 import { ContributorService } from 'src/app/service/contributor.service';
 import { TokenService } from 'src/app/service/token.service';
-import { AppConfig } from 'src/app/util/AppConfig';
-import { EventService } from 'src/app/util/service/event.service';
+import { NavbarManager } from '../NavbarManager';
 
 @Component({
   selector: 'app-contributor-dropdown',
   templateUrl: './contributor-dropdown.component.html',
   styleUrls: ['./contributor-dropdown.component.css']
 })
-export class ContributorDropdownComponent implements OnInit {
-  constructor(public contributorService: ContributorService, private tokenService: TokenService, private eventService: EventService, public config: AppConfig) { }
-
-  ngOnInit(): void {
-  }
+export class ContributorDropdownComponent {
+  constructor(public navbarManager: NavbarManager, private contributorService: ContributorService, private tokenService: TokenService) { }
 
   logOut(): void {
-    this.contributorService.logOut().subscribe(() => this.contributorService.contributor = null);
+    let observable = this.contributorService.logOut();
+    observable.callback = () => this.navbarManager.contributor = null;
+    observable.subscribe();
   }
 
   generateToken() {
-    this.tokenService.generateToken().subscribe(() => null, undefined, token => `Token successfully generated : ${token.value}`, undefined);
+    let observable = this.tokenService.generateToken();
+    observable.successMessageBuilder = token => `Token successfully generated : ${token.value}`;
+    observable.successMessageTimeOut = undefined;
+    observable.subscribe();
   }
 }

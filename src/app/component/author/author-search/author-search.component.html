@@ -1,8 +1,8 @@
-<div id="collapseBasic" [collapse]="!isVisible" [isAnimated]="true" class="bg-light">
+<div id="collapseBasic" [collapse]="!authorManager.isSearchVisible" [isAnimated]="true" class="bg-light">
     <div class="row p-3">
         <div class="col-auto">
             <label for="authorNameSearchInput" class="form-label">Name</label>
-            <input type="search" id="authorNameSearchInput" class="form-control" [(ngModel)]="authorSearchDto.name"
+            <input type="search" id="authorNameSearchInput" class="form-control" [(ngModel)]="authorManager.authorSearchDto.name"
                 (keydown.enter)="submit()">
         </div>
     </div>
@@ -15,7 +15,7 @@
         </div>
         <div class="col-auto">
             <input type="number" id="authorChapterCountSearchInput" class="form-control"
-                [(ngModel)]="authorSearchDto.minChapterCount" (keydown.enter)="submit()">
+                [(ngModel)]="authorManager.authorSearchDto.minChapterCount" (keydown.enter)="submit()">
         </div>
         <div class="col-auto">
             <div class="form-text">
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col-auto">
-            <input type="number" class="form-control" [(ngModel)]="authorSearchDto.maxChapterCount"
+            <input type="number" class="form-control" [(ngModel)]="authorManager.authorSearchDto.maxChapterCount"
                 (keydown.enter)="submit()">
         </div>
     </div>

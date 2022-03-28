@@ -7,6 +7,8 @@ export class Author extends Data {
     firstRelease: Date | null;
     lastRelease: Date | null;
 
+    modified = false;
+
     constructor(src: any) {
         super(src);
         this.romanizedName = src.romanizedName;

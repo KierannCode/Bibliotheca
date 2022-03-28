@@ -1,6 +1,6 @@
 <div class="row align-items-center justify-content-center">
     <div class="col-auto">
-        Logged as <span class="fw-bold fst-italic"> {{contributorService.contributor?.username}} </span>
+        Logged as <span class="fw-bold fst-italic"> {{navbarManager.contributor?.username}} </span>
         <i title="Administrator" class="bi bi-key"></i>
     </div>
     <div class="col-auto dropdown" dropdown>
@@ -9,7 +9,7 @@
         <ul class="dropdown-menu dropdown-menu-end" *dropdownMenu>
             <li><a class="dropdown-item">Dashboard</a></li>
             <li><a class="dropdown-item">Settings</a></li>
-            <div *ngIf="contributorService.contributor?.roleName === 'Administrator'">
+            <div *ngIf="navbarManager.contributor?.roleName === 'Administrator'">
                 <li>
                     <hr class="dropdown-divider">
                 </li>

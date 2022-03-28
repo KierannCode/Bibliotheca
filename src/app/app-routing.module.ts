@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthorGuard } from './component/author/AuthorGuard';
-import { AuthorComponent } from './component/author/author/author.component';
+import { AuthorComponent } from './component/author/author.component';
+import { AuthorManager } from './component/author/AuthorManager';
 import { BookListComponent } from './component/book/book-list/book-list.component';
 import { ErrorComponent } from './component/error/error.component';
 import { HomeComponent } from './component/home/home.component';
@@ -15,7 +15,7 @@ const routes: Routes = [
     path: '', component: NavbarComponent, children: [{
       path: 'home', component: HomeComponent
     }, {
-      path: 'authors', component: AuthorComponent, canDeactivate: [AuthorGuard]
+      path: 'authors', component: AuthorComponent, canDeactivate: [AuthorManager]
     }, {
       path: 'books', component: BookListComponent
     }]
