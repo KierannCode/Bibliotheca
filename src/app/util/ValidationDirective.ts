@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input } from '@angular/core';
-import { ErrorService } from '../error.service';
-import { EventService } from '../event.service';
+import { ErrorService } from './service/error.service';
+import { EventService } from './service/event.service';
 @Directive({
     selector: '[validated]'
 })
@@ -13,7 +13,7 @@ export class ValidationDirective {
         this.errorListElement.classList.add('invalid-feedback');
         eleRef.nativeElement.after(this.errorListElement);
         
-        eventService.updateValidation.subscribe(() => {
+        eventService.validationUpdateEmitter.subscribe(() => {
             this.errorListElement.innerHTML = '';
             eleRef.nativeElement.classList.remove('is-valid');
             eleRef.nativeElement.classList.remove('is-invalid');

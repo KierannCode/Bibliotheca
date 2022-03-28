@@ -1,11 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LogInDto } from 'src/app/dto/LogInDto';
-import { ErrorMap } from 'src/app/service/util/ErrorMap';
 import { ContributorService } from 'src/app/service/contributor.service';
-import { AppConfig } from 'src/app/service/util/AppConfig';
+import { AppConfig } from 'src/app/util/AppConfig';
 import { SignUpModalComponent } from '../sign-up-modal/sign-up-modal.component';
-import { ErrorService } from 'src/app/service/error.service';
+import { ErrorService } from 'src/app/util/service/error.service';
+import { Loading } from 'src/app/util/Loading';
 
 @Component({
   selector: 'app-log-in-dropdown',
@@ -13,11 +12,11 @@ import { ErrorService } from 'src/app/service/error.service';
   styleUrls: ['./log-in-dropdown.component.css']
 })
 export class LogInDropdownComponent implements OnInit {
-  isOpen = false;
+  isVisible = false;
 
   logInDto: LogInDto = {};
 
-  loading = false;
+  loadingLogIn = new Loading();
 
   @ViewChild(SignUpModalComponent) signUpModalComponent!: SignUpModalComponent;
 
@@ -28,14 +27,23 @@ export class LogInDropdownComponent implements OnInit {
   }
 
   logIn(): void {
-    this.errorService.flushErrors();
-    this.loading = true;
-    this.contributorService.logIn(this.logInDto).subscribe({
-      next: (contributor) => {
+    this.contributorService.logIn(this.logInDto).subscribe((contributor) => {
         this.contributorService.contributor = contributor
-        this.isOpen = false;
-      },
-      error: (errorResponse: HttpErrorResponse) => this.errorService.setErrors(errorResponse)
-    }).add(() => this.loading = false);
+        this.collapseDropdown();
+      }, this.loadingLogIn);
+  }
+
+  expandDropdown() {
+    this.errorService.flushErrors();
+    this.isVisible = true;
+  }
+
+  collapseDropdown() {
+    this.isVisible = false;
+  }
+
+  openSignUpModal() {
+    this.collapseDropdown();
+    this.signUpModalComponent.openModal();
   }
 }

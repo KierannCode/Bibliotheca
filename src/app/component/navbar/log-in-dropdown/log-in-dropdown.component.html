@@ -1,4 +1,4 @@
-<div class="dropdown" dropdown [(isOpen)]="isOpen" [autoClose]="false">
+<div class="dropdown" dropdown [(isOpen)]="isVisible" [autoClose]="false">
     <button class="btn btn-light dropdown-toggle" dropdownToggle>
         Log in
     </button>
@@ -14,9 +14,9 @@
                 (keydown.enter)="logIn()" validated="password">
         </div>
         <div class="d-flex justify-content-center m-3">
-            <button class="btn btn-lg btn-primary" (click)="logIn()" [disabled]="loading">
-                <div *ngIf="loading" class="spinner-border"></div>
-                <div *ngIf="!loading">Log in</div>
+            <button class="btn btn-lg btn-primary" (click)="logIn()" [disabled]="!loadingLogIn.isOver()">
+                <div *ngIf="!loadingLogIn.isOver()" class="spinner-border"></div>
+                <div *ngIf="loadingLogIn.isOver()">Log in</div>
             </button>
         </div>
         <div class="dropdown-divider"></div>
@@ -25,7 +25,7 @@
                 <label for="signUpButton" class="col-form-label">Don't have an account?</label>
             </div>
             <div class="col-auto">
-                <button class="btn btn-link" (click)="isOpen = false; signUpModalComponent.openModal()">Sign up</button>
+                <button class="btn btn-link" (click)="openSignUpModal()">Sign up</button>
                 <app-sign-up-modal [parent]="this"></app-sign-up-modal>
             </div>
         </div>

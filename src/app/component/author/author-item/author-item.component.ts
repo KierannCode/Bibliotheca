@@ -1,11 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
 import { AuthorDto } from 'src/app/dto/AuthorDto';
 import { Author } from 'src/app/model/Author';
 import { AuthorService } from 'src/app/service/author.service';
-import { ErrorService } from 'src/app/service/error.service';
-import { EventService } from 'src/app/service/event.service';
+import { EventService } from 'src/app/util/service/event.service';
+import { Loading } from 'src/app/util/Loading';
 
 @Component({
   selector: 'app-author-item',
@@ -16,11 +14,12 @@ export class AuthorItemComponent implements OnInit {
   @Input() author!: Author;
 
   authorDto: AuthorDto = {};
-  loadingUpdate = false;
 
-  loadingDelete = false;
+  loadingUpdate = new Loading();
 
-  constructor(private authorService: AuthorService, private eventService: EventService, private errorService: ErrorService) {
+  loadingDelete = new Loading();
+
+  constructor(private authorService: AuthorService, private eventService: EventService) {
   }
 
   ngOnInit(): void {
@@ -30,21 +29,20 @@ export class AuthorItemComponent implements OnInit {
     return Object.keys(this.authorDto).length != 0;
   }
 
-  update(): void {
-    this.loadingUpdate = true;
-    this.authorService.updateAuthor(this.author.id, this.authorDto).subscribe({
-      next: (author) => {
-        this.authorDto = {};
-        this.author = author;
-      }
-    }).add(() => this.loadingUpdate = false);
+  resetAuthorDto(): void {
+    this.authorDto = {};
   }
 
-  delete(): void {
-    this.loadingDelete = true;
-    this.authorService.deleteAuthor(this.author.id).subscribe({
-      next: () => this.eventService.updateAuthors.emit(),
-      error: (errorResponse: HttpErrorResponse) => this.errorService.setErrors(errorResponse)
-    }).add(() => this.loadingDelete = false);
+  updateAuthor(): void {
+    this.authorService.updateAuthor(this.author.id, this.authorDto).subscribe((author) => {
+      this.author = author;
+      this.resetAuthorDto();
+      this.eventService.authorsUpdateEmitter.emit();
+    }, this.loadingUpdate, (author) => `Author '${author.romanizedName}' successfully updated`);
+  }
+
+  deleteAuthor(): void {
+    this.authorService.deleteAuthor(this.author.id).subscribe(() => this.eventService.authorsUpdateEmitter.emit(),
+      this.loadingDelete, () => `Author successfully deleted`);
   }
 }
