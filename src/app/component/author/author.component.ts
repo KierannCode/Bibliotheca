@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthorService } from 'src/app/service/author.service';
 import { Loading } from 'src/app/util/Loading';
 import { Pageable } from 'src/app/util/Pageable';
@@ -11,8 +12,9 @@ import { AuthorManager } from './AuthorManager';
   templateUrl: './author.component.html',
   styleUrls: ['./author.component.css']
 })
-export class AuthorComponent {
+export class AuthorComponent implements OnDestroy {
   pageable: Pageable = { page: 0, sort: 'id', order: 'desc' };
+  currentPage = 1;
 
   totalResults = 0;
   firstItem: number | null = null;
@@ -20,14 +22,21 @@ export class AuthorComponent {
 
   loadingPage = new Loading();
 
-  constructor(public authorManager: AuthorManager, public navbarManager: NavbarManager, public authorService: AuthorService, eventService: EventService) {
-    eventService.authorsUpdateEmitter.subscribe(() => this.requestPage());
-    this.requestPage();
+  subscription: Subscription;
+
+  constructor(public authorManager: AuthorManager, public navbarManager: NavbarManager, public authorService: AuthorService, public eventService: EventService) {
+    this.subscription = eventService.authorsUpdateEmitter.subscribe(() => this.requestPage());
+    eventService.authorsUpdateEmitter.emit();
   }
 
   changePage(page: number) {
-    this.pageable.page = page - 1;
-    this.requestPage();
+    this.pageable.page = page;
+    this.eventService.authorsUpdateEmitter.emit();
+  }
+
+  switchOrder() {
+    this.pageable.order = this.pageable.order === 'asc' ? 'desc' : 'asc';
+    this.eventService.authorsUpdateEmitter.emit();
   }
 
   hasModifiedAuthors(): boolean {
@@ -47,6 +56,17 @@ export class AuthorComponent {
       };
       observable.loading = this.loadingPage;
       observable.subscribe();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  @HostListener('window:beforeunload',['$event'])
+  showMessage($event: any) {
+    if (this.hasModifiedAuthors()) {
+      $event.returnValue='All unsaved changes will be lost!';
     }
   }
 }

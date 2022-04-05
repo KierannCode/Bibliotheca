@@ -1,9 +1,12 @@
 .alert-container {
     position: fixed;
-    bottom: 0;
+    top: 1rem;
     left: 50%;
     transform: translate(-50%);
     z-index: 1100;
+}
+
+.animated-alert {
     animation-duration: 0.5s;
     animation-name: alert;
 }

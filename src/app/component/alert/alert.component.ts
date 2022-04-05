@@ -12,7 +12,7 @@ export class AlertComponent {
 
   constructor(eventService: EventService) {
     eventService.alertEmitter.subscribe(alert => {
-      this.alerts.push(alert)
+      this.alerts.push(alert);
     });
   }
 

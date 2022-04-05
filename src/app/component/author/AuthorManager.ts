@@ -39,6 +39,10 @@ export class AuthorManager implements CanDeactivate<AuthorComponent> {
     }
 
     canDeactivate(component: AuthorComponent): boolean {
-        return !component.hasModifiedAuthors() || confirm('Unsaved changes will be discarded, are you sure?');
+        if (!component.hasModifiedAuthors() || confirm('Unsaved changes will be discarded, are you sure?')) {
+            this.authors = new Array<Author>();
+            return true;
+        }
+        return false;
     }
 }

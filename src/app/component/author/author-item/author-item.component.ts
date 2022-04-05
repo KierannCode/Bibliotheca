@@ -4,6 +4,7 @@ import { Author } from 'src/app/model/Author';
 import { AuthorService } from 'src/app/service/author.service';
 import { EventService } from 'src/app/util/service/event.service';
 import { Loading } from 'src/app/util/Loading';
+import { NavbarManager } from '../../navbar/NavbarManager';
 
 @Component({
   selector: 'app-author-item',
@@ -19,7 +20,7 @@ export class AuthorItemComponent {
 
   loadingDelete = new Loading();
 
-  constructor(private authorService: AuthorService, private eventService: EventService) {
+  constructor(private authorService: AuthorService, private eventService: EventService, public navbarManager: NavbarManager) {
   }
 
   modify(field: keyof AuthorDto) {
@@ -39,7 +40,7 @@ export class AuthorItemComponent {
       this.eventService.authorsUpdateEmitter.emit();
     };
     observable.loading = this.loadingUpdate
-    observable.successMessageBuilder = author => `Author '${author.romanizedName}' successfully updated`;
+    observable.successMessageBuilder = author => `Author #${author.id} '${author.romanizedName}' successfully updated`;
     observable.subscribe();
   }
 
@@ -47,7 +48,12 @@ export class AuthorItemComponent {
     let observable = this.authorService.deleteAuthor(this.author.id);
     observable.callback = () => this.eventService.authorsUpdateEmitter.emit();
     observable.loading = this.loadingDelete;
-    observable.successMessageBuilder = () => `Author successfully deleted`;
+    observable.successMessageBuilder = author => `Author #${author.id} '${author.romanizedName}' successfully deleted`;
     observable.subscribe();
+  }
+
+  initUpdateAuthorDto(): void {
+    this.modify('romanizedName');
+    this.modify('originalName');
   }
 }

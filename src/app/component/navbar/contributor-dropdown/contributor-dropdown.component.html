@@ -1,7 +1,21 @@
 <div class="row align-items-center justify-content-center">
     <div class="col-auto">
-        Logged as <span class="fw-bold fst-italic"> {{navbarManager.contributor?.username}} </span>
-        <i title="Administrator" class="bi bi-key"></i>
+        <div class="d-flex">
+            <div class="col">
+                Logged as <span class="fw-bold fst-italic"> {{navbarManager.contributor?.username}} </span>
+                <i *ngIf="navbarManager.contributor?.roleName === 'Administrator'" title="Administrator" class="bi bi-key"></i>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-end">
+                {{navbarManager.contributor?.creationCount}}
+                <i title="Creations" class="bi bi-file-earmark-plus text-success"></i>
+                {{navbarManager.contributor?.updateCount}}
+                <i title="Changes" class="bi bi-pencil text-primary"></i>
+                {{navbarManager.contributor?.deletionCount}}
+                <i title="Deletions" class="bi bi-trash text-danger"></i>
+            </div>
+        </div>
     </div>
     <div class="col-auto dropdown" dropdown>
         <button type="button" class="btn btn-light dropdown-toggle" dropdownToggle>

@@ -22,13 +22,14 @@
 <div class="container">
     <app-author-search></app-author-search>
     <div class="my-3">
-        <div class="row justify-content-between">
+        <div class="row align-items-center justify-content-between">
             <div class="col-auto">
                 <div class="row align-items-center">
                     <div class="col">
-                        <pagination [boundaryLinks]="true" [totalItems]="totalResults" [maxSize]="authorManager.paginationMaxSize"
-                            [itemsPerPage]="authorService.pageSize" previousText="&lsaquo;" nextText="&rsaquo;"
-                            firstText="&laquo;" lastText="&raquo;" (pageChanged)="changePage($event.page - 1)">
+                        <pagination [(ngModel)]="currentPage" [boundaryLinks]="true" [totalItems]="totalResults"
+                            [maxSize]="authorManager.paginationMaxSize" [itemsPerPage]="authorService.pageSize"
+                            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                            (pageChanged)="changePage($event.page - 1)">
                         </pagination>
                     </div>
                     <div *ngIf="loadingPage.isOver()" class="col-auto">
@@ -49,8 +50,9 @@
                     <div class="col-auto">
                         Sort by
                     </div>
-                    <div class="col">
-                        <select [(ngModel)]="pageable.sort" class="form-select" (ngModelChange)="requestPage()">
+                    <div class="col-auto">
+                        <select [(ngModel)]="pageable.sort" class="form-select"
+                            (ngModelChange)="eventService.authorsUpdateEmitter.emit()">
                             <option value="id">Creation</option>
                             <option value="lastUpdate.timestamp">Last update</option>
                             <option value="romanizedName">Name</option>
@@ -58,14 +60,19 @@
                         </select>
                     </div>
                     <div class="col">
-                        <select [(ngModel)]="pageable.order" class="form-select" (ngModelChange)="requestPage()">
-                            <option value="asc">Ascending</option>
-                            <option value="desc">Descending</option>
-                        </select>
+                        <i role="button" class="bi h5 bi-arrow-down-up" title="Switch order" (click)="switchOrder()"></i>
                     </div>
                 </div>
             </div>
         </div>
         <app-author-list></app-author-list>
+        <div *ngIf="totalResults > 0" class="row justify-content-center">
+            <div class="col-auto">
+                <pagination [(ngModel)]="currentPage" [boundaryLinks]="true" [totalItems]="totalResults"
+                    [maxSize]="authorManager.paginationMaxSize" [itemsPerPage]="authorService.pageSize"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                    (pageChanged)="changePage($event.page - 1)">
+                </pagination>
+            </div>
+        </div>
     </div>
-</div>

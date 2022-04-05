@@ -40,7 +40,7 @@ export class AuthorService {
     return this.observableService.manage(this.http.patch<Author>(`${this.config.API_ENDPOINT}/author/${authorId}`, authorDto, { withCredentials: true }).pipe(map(author => EntityManager.deserialize(author, Author))));
   }
 
-  deleteAuthor(authorId: number): ManagedObservable<void> {
-    return this.observableService.manage(this.http.delete<void>(`${this.config.API_ENDPOINT}/author/${authorId}`, { withCredentials: true }));
+  deleteAuthor(authorId: number): ManagedObservable<Author> {
+    return this.observableService.manage(this.http.delete<Author>(`${this.config.API_ENDPOINT}/author/${authorId}`, { withCredentials: true }).pipe(map(author => EntityManager.deserialize(author, Author))));
   }
 }

@@ -9,7 +9,7 @@ import { EventService } from 'src/app/util/service/event.service';
 })
 export class ErrorComponent implements OnInit {
   constructor(eventService: EventService, router: Router) {
-    eventService.alertEmitter.emit({ type: 'danger', message: 'The requested url does not exist' });
+    eventService.alertEmitter.emit({ type: 'danger', message: 'The requested url does not exist, redirected to home', timeout: 5000});
     router.navigate(['home']);
   }
 

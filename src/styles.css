@@ -20,6 +20,8 @@ pagination ul {
 
 body {
     background: linear-gradient(to right, dimgray, #222222 5%, #222222 95%, dimgray);
+    width: 100vw;
+    overflow: overlay;
 }
 
 .title {
@@ -28,4 +30,18 @@ body {
 
 .card-field {
     height: 2.5rem;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+}
+   
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #777; 
 }

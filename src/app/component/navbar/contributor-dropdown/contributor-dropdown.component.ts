@@ -19,7 +19,8 @@ export class ContributorDropdownComponent {
 
   generateToken() {
     let observable = this.tokenService.generateToken();
-    observable.successMessageBuilder = token => `Token successfully generated : ${token.value}`;
+    observable.callback = token => navigator.clipboard.writeText(token.value);
+    observable.successMessageBuilder = token => `Token successfully generated : ${token.value} (copied to clipboard)`;
     observable.successMessageTimeOut = undefined;
     observable.subscribe();
   }

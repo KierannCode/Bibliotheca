@@ -34,7 +34,7 @@ export class SignUpModalComponent implements AfterViewInit {
       this.navbarManager.expandLogInDropdown();
     }
     observable.loading = this.loadingSignUp;
-    observable.successMessageBuilder = contributor => `Contributor '${contributor.username}' successfully registered`;
+    observable.successMessageBuilder = contributor => `Your account '${contributor.username}' was successfully created`;
     observable.subscribe();
   }
 }

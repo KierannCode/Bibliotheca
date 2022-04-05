@@ -1,6 +1,8 @@
 <div class="alert-container">
-    <alert *ngFor="let alert of alerts; let i = index" [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout"
+    <div *ngFor="let alert of alerts; let i = index" class="animated-alert">
+    <alert  [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout"
         (onClosed)="removeAlert(i)">
         {{alert.message}}
     </alert>
+    </div>
 </div>

@@ -16,4 +16,11 @@ export class EntityManager {
     this.entityMap.clear();
     return entity;
   }
+
+  static deserializeNullable<T>(src: any, type: {new(src: any): T}): T | null {
+    if (src == null) {
+      return null;
+    }
+    return this.deserialize<T>(src, type);
+  }
 }

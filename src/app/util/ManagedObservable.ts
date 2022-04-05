@@ -11,7 +11,7 @@ export class ManagedObservable<T> {
 
     successMessageBuilder?: (value: T) => string;
 
-    successMessageTimeOut: number | undefined = 3000;
+    successMessageTimeOut: number | undefined = 4000;
 
     constructor(private observable: Observable<T>, private errorService: ErrorService, private eventService: EventService) { }
 

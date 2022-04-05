@@ -10,9 +10,9 @@
                     <div *ngIf="updateAuthorDto.romanizedName === undefined" class="col-auto">
                         {{author.romanizedName}}
                     </div>
-                    <div *ngIf="updateAuthorDto.romanizedName === undefined" class="col-auto">
-                        <i class="bi bi-pencil btn btn-link p-0" title="modify"
-                            (click)="modify('romanizedName')"></i>
+                    <div *ngIf="navbarManager.contributor && updateAuthorDto.romanizedName === undefined"
+                        class="col-auto">
+                        <i class="bi bi-pencil btn btn-link p-0" title="modify" (click)="modify('romanizedName')"></i>
                     </div>
                     <div *ngIf="updateAuthorDto.romanizedName !== undefined" class="col-auto">
                         <input type="text" [(ngModel)]="updateAuthorDto.romanizedName" class="form-control"
@@ -26,9 +26,9 @@
                     <div *ngIf="updateAuthorDto.originalName === undefined" class="col-auto">
                         {{author.originalName}}
                     </div>
-                    <div *ngIf="updateAuthorDto.originalName === undefined" class="col-auto">
-                        <i class="bi bi-pencil btn btn-link p-0" title="modify"
-                            (click)="modify('originalName')"></i>
+                    <div *ngIf="navbarManager.contributor && updateAuthorDto.originalName === undefined"
+                        class="col-auto">
+                        <i class="bi bi-pencil btn btn-link p-0" title="modify" (click)="modify('originalName')"></i>
                     </div>
                     <div *ngIf="updateAuthorDto.originalName !== undefined" class="col-auto">
                         <input type="text" [(ngModel)]="updateAuthorDto.originalName" class="form-control"
@@ -71,13 +71,14 @@
                         {{author.lastUpdate.contributor.username}}</div>
                 </div>
             </div>
-            <div class="col-auto vr"></div>
-            <div class="col-2">
+            <div *ngIf="navbarManager.contributor" class="col-auto vr"></div>
+            <div *ngIf="navbarManager.contributor" class="col-2">
                 <div class="d-flex flex-column h-100">
                     <h5 class="text-center">Actions</h5>
                     <div class="flex-fill d-flex flex-column align-items-center justify-content-center">
                         <div *ngIf="author.modified" class="m-2">
-                            <button class="btn btn-primary w-auto" (click)="updateAuthor()" [disabled]="!loadingUpdate.isOver()">
+                            <button class="btn btn-primary w-auto" (click)="updateAuthor()"
+                                [disabled]="!loadingUpdate.isOver()">
                                 <div *ngIf="!loadingUpdate.isOver()" class="spinner-border"></div>
                                 <div *ngIf="loadingUpdate.isOver()">Save changes</div>
                             </button>
@@ -87,8 +88,16 @@
                                 Discard changes
                             </button>
                         </div>
-                        <div class="m-2">
-                            <button class="btn btn-outline-danger" [disabled]="!loadingDelete.isOver()" (click)="deleteAuthor()">
+                        <div *ngIf="!author.modified" class="m-2">
+                            <button class="btn btn-primary w-auto" (click)="initUpdateAuthorDto()">
+                                Modify author
+                            </button>
+                        </div>
+                        <div class="m-2"
+                            [title]="navbarManager.contributor.roleName !== 'Administrator' && navbarManager.contributor.id !== author.creation.contributor.id ? 'This object can only be deleted by its creator or an administrator' : (author.modified ? 'This object can not be deleted while being modified' : null)">
+                            <button class="btn btn-danger"
+                                [disabled]="author.modified || !loadingDelete.isOver() || (navbarManager.contributor.roleName !== 'Administrator' && navbarManager.contributor.id !== author.creation.contributor.id)"
+                                (click)="deleteAuthor()">
                                 <div *ngIf="!loadingDelete.isOver()" class="spinner-border"></div>
                                 <div *ngIf="loadingDelete.isOver()">Delete author</div>
                             </button>
