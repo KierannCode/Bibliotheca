@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "index-frontend": {
+    "bibliotheca-interface": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/index-frontend",
+            "outputPath": "bibliotheca-interface",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "index-frontend:build:production"
+              "browserTarget": "bibliotheca-interface:build:production"
             },
             "development": {
-              "browserTarget": "index-frontend:build:development"
+              "browserTarget": "bibliotheca-interface:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "index-frontend:build"
+            "browserTarget": "bibliotheca-interface:build"
           }
         },
         "test": {
@@ -106,5 +106,5 @@
       }
     }
   },
-  "defaultProject": "index-frontend"
+  "defaultProject": "bibliotheca-interface"
 }

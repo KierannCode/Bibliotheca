@@ -1,5 +1,5 @@
 {
-  "name": "index-frontend",
+  "name": "bibliotheca-interface",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
