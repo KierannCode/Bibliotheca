@@ -21,7 +21,6 @@ export class ErrorService {
         this.validationErrors = new ErrorMap(Object.entries(errorResponse.error));
         break;
       default:
-        console.log(errorResponse);
         this.eventService.alertEmitter.emit({type: 'danger', message: `Error ${errorResponse.status} : ${errorResponse.error}`, timeout: 10000});
         break;
     }

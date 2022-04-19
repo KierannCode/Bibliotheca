@@ -18,7 +18,7 @@ export class NavbarManager {
     signUpModalTemplate!: TemplateRef<any>;
 
     constructor(contributorService: ContributorService, private errorService: ErrorService, private modalService: BsModalService) {
-        let observable = contributorService.getAuthenticatedContributer();
+        let observable = contributorService.getAuthenticatedContributor();
         observable.callback = contributor => this.contributor = contributor;
         observable.subscribe();
     }

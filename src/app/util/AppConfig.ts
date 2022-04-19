@@ -1,10 +1,13 @@
+import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppConfig {
-    API_ENDPOINT = 'https://f8d3-109-25-208-51.ngrok.io';
+    API_ENDPOINT = 'http://localhost:8080';
 
     CONTACT_EMAIL = 'admin@admin.com';
+
+    AUTHENTICATION_TOKEN_HEADER = 'authentication-token';
 }
