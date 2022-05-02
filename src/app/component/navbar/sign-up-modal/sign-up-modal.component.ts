@@ -30,7 +30,7 @@ export class SignUpModalComponent implements AfterViewInit {
       this.navbarManager.closeSignUpModal();
       this.signUpDto = {};
       this.navbarManager.logInDto.username = contributor.username;
-      this.navbarManager.logInDto.password = '';
+      this.navbarManager.logInDto.rawPassword = '';
       this.navbarManager.expandLogInDropdown();
     }
     observable.loading = this.loadingSignUp;

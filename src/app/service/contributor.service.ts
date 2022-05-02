@@ -18,18 +18,18 @@ export class ContributorService {
   }
 
   getAuthenticatedContributor(): ManagedObservable<Contributor | null> {
-    return this.observableService.manage(this.http.get(`${this.config.API_ENDPOINT}/contributor`).pipe(map(contributor => EntityManager.deserializeNullable(contributor, Contributor))));
+    return this.observableService.manage(this.http.get(`${this.config.API_ENDPOINT}/user`).pipe(map(contributor => EntityManager.deserializeNullable(contributor, Contributor))));
   }
 
   signUp(dto: SignUpDto): ManagedObservable<Contributor> {
-    return this.observableService.manage(this.http.post(`${this.config.API_ENDPOINT}/register`, dto).pipe(map(contributor => EntityManager.deserialize(contributor, Contributor))));
+    return this.observableService.manage(this.http.post(`${this.config.API_ENDPOINT}/user/register`, dto).pipe(map(contributor => EntityManager.deserialize(contributor, Contributor))));
   }
 
   logIn(dto: LogInDto): ManagedObservable<Contributor> {
-    return this.observableService.manage(this.http.post(`${this.config.API_ENDPOINT}/authenticate`, dto).pipe(map(contributor => EntityManager.deserialize(contributor, Contributor))));
+    return this.observableService.manage(this.http.post(`${this.config.API_ENDPOINT}/user/authenticate`, dto).pipe(map(contributor => EntityManager.deserialize(contributor, Contributor))));
   }
 
   logOut(): ManagedObservable<void> {
-    return this.observableService.manage(this.http.post(`${this.config.API_ENDPOINT}/logOut`, {}));
+    return this.observableService.manage(this.http.post(`${this.config.API_ENDPOINT}/user/logOut`, {}));
   }
 }

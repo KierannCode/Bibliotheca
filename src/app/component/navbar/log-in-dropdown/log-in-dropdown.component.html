@@ -10,7 +10,7 @@
         </div>
         <div class="m-3">
             <label for="passwordLogInInput" class="form-label">Password</label>
-            <input type="password" id="passwordLogInInput" class="form-control" [(ngModel)]="navbarManager.logInDto.password"
+            <input type="password" id="passwordLogInInput" class="form-control" [(ngModel)]="navbarManager.logInDto.rawPassword"
                 (keydown.enter)="logIn()" validated="password">
         </div>
         <div class="d-flex justify-content-center m-3">
