@@ -1,7 +1,6 @@
 @angular/animations
 MIT
 
-<<<<<<< HEAD
 @angular/cdk
 MIT
 The MIT License
@@ -65,51 +64,6 @@ THE SOFTWARE.
 MIT
 
 @angular/router
-=======
-@angular/common
-MIT
-
-@angular/core
-MIT
-
-@angular/forms
-MIT
-
-@angular/platform-browser
-MIT
-
-@angular/router
-MIT
-
-ngx-bootstrap/alert
-MIT
-
-ngx-bootstrap/collapse
-MIT
-
-ngx-bootstrap/component-loader
-MIT
-
-ngx-bootstrap/datepicker
-MIT
-
-ngx-bootstrap/dropdown
-MIT
-
-ngx-bootstrap/focus-trap
-MIT
-
-ngx-bootstrap/modal
-MIT
-
-ngx-bootstrap/pagination
-MIT
-
-ngx-bootstrap/positioning
-MIT
-
-ngx-bootstrap/utils
->>>>>>> 80b00b6af55822e4624e66d5a06cbc094f254c45
 MIT
 
 rxjs
